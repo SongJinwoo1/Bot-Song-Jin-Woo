@@ -8,53 +8,52 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #00f2ff; /* أزرق المانا */
-            --secondary: #6366f1;
-            --bg: #03030b;
-            --card: rgba(10, 10, 20, 0.98);
+            --primary: #00f2ff;
+            --secondary: #7000ff;
+            --bg: #020205;
+            --card: rgba(15, 15, 25, 0.98);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
-        body { font-family: 'Cairo', sans-serif; background: var(--bg); color: white; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Cairo', sans-serif; background: var(--bg); color: white; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; touch-action: none; }
 
-        /* خلفية مانا متحركة */
         canvas#bgCanvas { position: fixed; inset: 0; z-index: 0; }
 
-        /* مؤشر السيف الأزرق المضيء */
+        /* سيف المانا للكمبيوتر */
         #cursor-dagger {
-            position: fixed; width: 45px; height: 45px;
+            position: fixed; width: 50px; height: 50px;
             background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%2300f2ff' d='M495.9 16.1c-21.3-21.3-55.8-21.3-77.1 0L311.3 123.6l-45.3-45.3c-12.5-12.5-32.8-12.5-45.3 0l-45.3 45.3L68.1 16.1c-21.3-21.3-55.8-21.3-77.1 0s-21.3 55.8 0 77.1l107.5 107.5-45.3 45.3c-12.5 12.5-12.5 32.8 0 45.3l45.3 45.3L16.1 418.8c-21.3 21.3-21.3 55.8 0 77.1s55.8 21.3 77.1 0l107.5-107.5 45.3 45.3c12.5 12.5 32.8 12.5 45.3 0l45.3-45.3 107.5 107.5c21.3 21.3 55.8 21.3 77.1 0s21.3-55.8 0-77.1l-107.5-107.5 45.3-45.3c12.5-12.5 12.5-32.8 0-45.3l-45.3-45.3 107.5-107.5c21.2-21.3 21.2-55.8-.1-77.1z'/%3E%3C/svg%3E");
-            background-size: contain; background-repeat: no-repeat;
-            z-index: 10000; pointer-events: none;
-            filter: drop-shadow(0 0 10px var(--primary)) drop-shadow(0 0 20px var(--secondary));
-            transform: rotate(45deg); transform-origin: center; transition: transform 0.1s linear;
+            background-size: contain; z-index: 10000; pointer-events: none;
+            filter: drop-shadow(0 0 12px var(--primary)); transform: rotate(45deg); display: none;
         }
 
-        .hub { position: relative; z-index: 10; text-align: center; }
-        .logo-box { position: relative; width: 200px; height: 200px; margin: 0 auto; transition: 0.1s; }
-        .main-logo { width: 100%; height: 100%; border-radius: 50%; border: 3px solid var(--primary); box-shadow: 0 0 40px var(--primary); }
+        .slash { position: fixed; width: 80px; height: 3px; background: var(--primary); z-index: 9999; pointer-events: none; transform: rotate(-45deg); box-shadow: 0 0 20px var(--primary); animation: slashAnim 0.3s ease-out forwards; }
+        @keyframes slashAnim { 0% { transform: scaleX(0) rotate(-45deg); opacity: 1; } 100% { transform: scaleX(2) rotate(-45deg); opacity: 0; } }
 
-        .btn-summon { background: var(--card); border: 1px solid var(--primary); padding: 15px 30px; border-radius: 12px; color: white; font-weight: 700; margin: 10px; transition: 0.3s; display: inline-flex; align-items: center; gap: 10px; cursor: none; }
-        .btn-summon:hover { background: var(--primary); color: #000; transform: scale(1.1); box-shadow: 0 0 30px var(--primary); }
+        .hub { position: relative; z-index: 10; text-align: center; width: 90%; }
+        .main-logo { width: 180px; height: 180px; border-radius: 50%; border: 3px solid var(--primary); box-shadow: 0 0 40px var(--primary); transition: 0.5s; }
+        .main-logo:hover { transform: scale(1.05) rotate(5deg); }
 
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.96); display: none; align-items: center; justify-content: center; z-index: 2000; backdrop-filter: blur(10px); }
-        .modal.active { display: flex; animation: arise 0.5s forwards; }
-        @keyframes arise { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+        .btn-summon { background: var(--card); border: 1px solid var(--primary); padding: 12px 20px; border-radius: 10px; color: white; font-weight: 700; margin: 8px; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; width: 140px; justify-content: center; box-shadow: inset 0 0 10px rgba(0,242,255,0.1); }
+        .btn-summon:active { transform: scale(0.95); }
 
-        .modal-body { background: var(--card); width: 90%; max-width: 480px; padding: 30px; border-radius: 20px; border: 2px solid var(--primary); text-align: center; box-shadow: 0 0 50px rgba(0,242,255,0.2); }
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.98); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
+        .modal.active { display: flex; animation: emerge 0.4s ease-out; }
+        @keyframes emerge { from { opacity: 0; filter: blur(10px); } to { opacity: 1; filter: blur(0); } }
 
-        /* هيبة صورة الملك */
-        .king-image { 
-            width: 100%; height: 220px; object-fit: cover; border-radius: 15px; 
-            margin-bottom: 20px; border: 2px solid var(--primary);
-            filter: grayscale(0.3) contrast(1.1); transition: 0.5s;
-        }
-        .king-image:hover { filter: grayscale(0); box-shadow: 0 0 30px var(--primary); }
+        .modal-body { background: var(--card); width: 100%; max-width: 450px; padding: 25px; border-radius: 20px; border: 2px solid var(--primary); text-align: center; position: relative; overflow-y: auto; max-height: 90vh; }
+        
+        .guild-header { color: var(--primary); font-size: 1.2rem; font-weight: 900; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .feature-item { text-align: right; background: rgba(255,255,255,0.03); padding: 10px; margin: 5px 0; border-radius: 8px; font-size: 0.85rem; border-right: 3px solid var(--primary); }
 
-        .contact-link { display: flex; align-items: center; justify-content: center; gap: 15px; padding: 15px; background: #0a0a0f; border-radius: 12px; margin-bottom: 12px; text-decoration: none; color: white; font-weight: bold; border: 1px solid #333; transition: 0.3s; }
-        .contact-link:hover { border-color: var(--primary); transform: translateX(-10px); background: #11111a; }
+        .king-image { width: 100%; height: 200px; object-fit: cover; border-radius: 15px; margin-bottom: 15px; border: 2px solid var(--primary); }
 
-        #notif { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(200px); background: var(--primary); color: #000; padding: 12px 30px; border-radius: 50px; transition: 0.5s; z-index: 10000; font-weight: 900; box-shadow: 0 0 20px var(--primary); }
+        /* حقوق الملك */
+        .system-footer { position: fixed; bottom: 15px; width: 100%; text-align: center; font-size: 0.7rem; color: #444; letter-spacing: 2px; }
+
+        #notif { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: var(--primary); color: #000; padding: 10px 25px; border-radius: 30px; transition: 0.5s; z-index: 10000; font-weight: 900; }
+        
+        @media (min-width: 1024px) { #cursor-dagger { display: block; } * { cursor: none; } }
     </style>
 </head>
 <body>
@@ -64,65 +63,74 @@
     <div id="notif"></div>
 
     <main class="hub">
-        <div class="logo-box" id="logoBox">
-            <img src="https://github.com/SongJinwoo1/Bot-Song-Jin-Woo/blob/main/photo_5821173209150196869_y%20(1).jpg?raw=true" class="main-logo">
-        </div>
-        <h2 style="margin: 25px 0; letter-spacing: 3px; text-shadow: 0 0 15px var(--primary);">SONG JIN WOO SYSTEM</h2>
+        <img src="https://github.com/SongJinwoo1/Bot-Song-Jin-Woo/blob/main/photo_5821173209150196869_y%20(1).jpg?raw=true" class="main-logo">
+        <h2 style="margin: 20px 0; font-size: 1.3rem; letter-spacing: 2px;">SONG JIN WOO SYSTEM</h2>
         
         <div class="actions">
-            <button class="btn-summon" onclick="showModal('laws')"><i class="fas fa-scroll"></i> القوانين</button>
-            <button class="btn-summon" onclick="showModal('guilds')"><i class="fas fa-shield-halved"></i> النقابات</button>
-            <button class="btn-summon" onclick="showModal('king')"><i class="fas fa-crown"></i> تواصل مع الملك</button>
+            <button class="btn-summon" onclick="showModal('laws')">القوانين</button>
+            <button class="btn-summon" onclick="showModal('guilds')">النقابة</button>
+            <button class="btn-summon" onclick="showModal('king')" style="width: 85%; background: linear-gradient(45deg, #0a0a1a, #1a0033); border-color: var(--secondary);">بوابة ملك الظلال</button>
         </div>
     </main>
+
+    <div class="modal" id="modal-guilds">
+        <div class="modal-body">
+            <div class="guild-header">⏣ نـقـابـة اكـلـيـبـس • 南‌‏東</div>
+            <p style="font-size: 0.7rem; color: var(--primary); margin-bottom: 15px;">فرع جديد | إقليم فالكيري</p>
+            
+            <div class="feature-item">✭ تفاعل أسطوري (مملكة عريقة منذ 2022)</div>
+            <div class="feature-item">✭ مشرفين محترمين ونظام صارم</div>
+            <div class="feature-item">✭ فعاليات مستمرة وجوائز مادية ورقمية</div>
+            <div class="feature-item">✭ تابعة لإقليم فالكيري العظيم</div>
+
+            <a href="https://chat.whatsapp.com/J3ebo43vwzjBlMfViL5EJ5" class="btn-summon" style="width:100%; margin-top: 20px; background: #25d366; color: black; border: none;">
+                <i class="fab fa-whatsapp"></i> انضمام للنقابة
+            </a>
+            <button class="btn-summon" style="width:100%" onclick="closeModal()">إغلاق</button>
+        </div>
+    </div>
 
     <div class="modal" id="modal-king">
         <div class="modal-body">
             <img src="photo_5823313378468892156_y.jpg" class="king-image">
-            <h2 style="color:var(--primary); margin-bottom: 20px;">حاكم الظلال</h2>
+            <h3 style="color:var(--primary); margin-bottom:10px;">𝑯𝑬𝑰𝑹 𝑶𝑭 𝑺𝑯𝑨𝑫𝑶𝑾𝑺</h3>
+            <p style="font-size: 0.8rem; margin-bottom: 20px; color: #888;">أنت الآن أمام حضرة ملك الظلال - سونغ جين وو</p>
             
-            <a href="https://wa.me/رقم_هاتفك" class="contact-link"><i class="fab fa-whatsapp" style="color:#25d366"></i> الديوان الملكي (خاص)</a>
-            <a href="رابط_قناتك" class="contact-link"><i class="fas fa-bullhorn"></i> القناة الرسمية</a>
-            
-            <button class="btn-summon" style="width:100%; margin-top: 10px;" onclick="closeModal()">انسحاب</button>
-        </div>
-    </div>
-
-    <div class="modal" id="modal-guilds">
-        <div class="modal-body">
-            <h2 style="color:var(--primary); margin-bottom: 20px;">🛡️ فيلق النقابات المعتمدة</h2>
-            <div class="contact-link" onclick="join('فيلق التنين')">🐉 فيلق التنين (Rank S)</div>
-            <div class="contact-link" onclick="join('حرس الظلال')">👥 حرس الظلال (Rank A)</div>
-            <button class="btn-summon" style="width:100%" onclick="closeModal()">إغلاق</button>
+            <a href="https://wa.me/رقمك" class="btn-summon" style="width:100%"><i class="fab fa-whatsapp"></i> الديوان الملكي</a>
+            <button class="btn-summon" style="width:100%" onclick="closeModal()">انسحاب</button>
         </div>
     </div>
 
     <div class="modal" id="modal-laws">
         <div class="modal-body">
-            <h2 style="color:var(--primary); margin-bottom: 20px;">📜 عهد النظام</h2>
-            <p style="text-align:right; line-height: 2;">
-                • الولاء للمطور هو القانون الأول.<br>
-                • اختيار النقابة أبدي ولا رجعة فيه.<br>
-                • رقم هاتفك هو هويتك المسجلة لدينا.
-            </p>
-            <button class="btn-summon" style="width:100%; margin-top: 10px;" onclick="closeModal()">أقسمت بالولاء</button>
+            <h2 style="color:var(--primary); margin-bottom: 15px;">📜 دستور الظلال</h2>
+            <div style="text-align: right; font-size: 0.85rem; line-height: 1.7;">
+                1. الولاء المطلق للمطور هو القانون الأول.<br>
+                2. يمنع منعاً باتاً انتحال شخصية الملك.<br>
+                3. اختيار النقابة أبدي (إكليبس هي المقر).<br>
+                4. رقم الهاتف المسجل هو هويتك الوحيدة.<br>
+                5. أي محاولة لاختراق النظام تؤدي للحظر الفوري.<br>
+                6. الاحترام المتبادل داخل النقابة واجب.<br>
+                7. يمنع استخدام البوت في أغراض تخريبية.<br>
+                8. حقوق البرمجة والتصميم تعود للملك فقط.<br>
+                9. كلمة الملك هي القرار النهائي دائماً.
+            </div>
+            <button class="btn-summon" style="width:100%; margin-top:15px;" onclick="closeModal()">أقسمت بالولاء</button>
         </div>
     </div>
 
+    <div class="system-footer">PROPERTY OF S.J.W SYSTEM © 2026</div>
+
     <script>
-        // محرك الخلفية
         const canvas = document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
         let dots = [];
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-
-        for(let i=0; i<60; i++) {
-            dots.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx: (Math.random()-0.5)*0.3, vy: (Math.random()-0.5)*0.3 });
-        }
+        for(let i=0; i<40; i++) { dots.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx: (Math.random()-0.5)*0.2, vy: (Math.random()-0.5)*0.2 }); }
 
         function draw() {
             ctx.clearRect(0,0,canvas.width, canvas.height);
-            ctx.fillStyle = "rgba(0, 242, 255, 0.3)";
+            ctx.fillStyle = "rgba(0, 242, 255, 0.2)";
             dots.forEach(d => {
                 d.x += d.vx; d.y += d.vy;
                 if(d.x<0 || d.x>canvas.width) d.vx*=-1;
@@ -133,39 +141,34 @@
         }
         draw();
 
-        // تحريك السيف الأزرق المضيء
+        // نظام السيف المطور
         const dagger = document.getElementById('cursor-dagger');
         document.addEventListener('mousemove', (e) => {
             dagger.style.left = e.clientX + 'px';
             dagger.style.top = e.clientY + 'px';
-            
-            // ميلان السيف مع الحركة
-            const rotation = (e.movementX + e.movementY) * 2;
-            dagger.style.transform = `translate(-20%, -20%) rotate(${45 + rotation}deg)`;
-            
-            // تحريك الشعار 3D
-            const x = (window.innerWidth/2 - e.clientX)/25;
-            const y = (window.innerHeight/2 - e.clientY)/25;
-            document.getElementById('logoBox').style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+            const x = (window.innerWidth/2 - e.clientX)/30;
+            const y = (window.innerHeight/2 - e.clientY)/30;
+            document.querySelector('.main-logo').style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
         });
 
-        // نظام الولاء
-        function join(n) {
-            const s = localStorage.getItem('loyalty');
-            if(s) { alertNotif("الخيانة مستحيلة! ولائك لـ " + s); }
-            else { 
-                let p = prompt("أدخل رقم هاتفك لتسجيل هويتك في النظام:"); 
-                if(p && p.length > 7) { 
-                    localStorage.setItem('loyalty', n); 
-                    alertNotif("تم قبول ولائك في " + n); 
-                } 
-            }
+        document.addEventListener('touchstart', (e) => {
+            const touch = e.touches[0];
+            createSlash(touch.clientX, touch.clientY);
+        });
+
+        function createSlash(x, y) {
+            const div = document.createElement('div');
+            div.className = 'slash';
+            div.style.left = x - 40 + 'px';
+            div.style.top = y + 'px';
+            document.body.appendChild(div);
+            setTimeout(() => div.remove(), 300);
         }
 
         function alertNotif(t) {
             const n = document.getElementById('notif');
             n.innerText = t; n.style.transform = 'translateX(-50%) translateY(0)';
-            setTimeout(() => n.style.transform = 'translateX(-50%) translateY(200px)', 3000);
+            setTimeout(() => n.style.transform = 'translateX(-50%) translateY(-100px)', 3000);
         }
 
         function showModal(id) { document.getElementById('modal-'+id).classList.add('active'); }
