@@ -3,239 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سونغ جين وو - Song Jin Woo | محترف التطوير</title>
+    <title>𝑩𝑶𝑻 𝑺𝒐𝒏𝒈 𝑱𝒊𝒏 𝑾𝒐𝒐 | التجربة الكاملة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/particles.js@2.0.0/particles.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* المتغيرات الأساسية */
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #a855f7;
+            --accent: #ec4899;
+            --dark: #0f0f1a;
+            --darker: #08080f;
+            --card: #1a1a2e;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glow: rgba(99, 102, 241, 0.5);
         }
 
-        :root {
-            --primary: #1a1a2e;
-            --secondary: #16213e;
-            --accent: #d4af37;
-            --accent-purple: #9d4edd;
-            --accent-red: #c1121f;
-            --text-light: #e0e0e0;
-            --text-dark: #0a0a0a;
-            --border-color: #2a2a4e;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: var(--text-light);
-            line-height: 1.6;
+            font-family: 'Cairo', sans-serif;
+            background: var(--darker);
+            color: var(--text);
+            line-height: 1.8;
             overflow-x: hidden;
         }
 
-        #particles-js {
+        /* الخلفية المتحركة */
+        .bg-animation {
             position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
+            top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* الهيدر */
+        /* Header */
         header {
-            padding: 20px 0;
-            background: rgba(26, 26, 46, 0.8);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid var(--border-color);
+            background: rgba(15, 15, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+            position: sticky; top: 0; z-index: 1000; padding: 1rem 0;
         }
 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text); font-weight: 700; }
+        .logo img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--primary); }
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--accent-purple);
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        /* Hero Section */
+        .hero { text-align: center; padding: 6rem 2rem 4rem; }
+        .hero-badge {
+            display: inline-block; background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 0.5rem 1.5rem; border-radius: 50px; font-weight: 700; margin-bottom: 2rem;
+            animation: glow 2s ease-in-out infinite alternate;
         }
+        @keyframes glow { from { box-shadow: 0 0 10px var(--glow); } to { box-shadow: 0 0 30px var(--glow); } }
 
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 20px;
+        .hero h1 { font-size: 3.5rem; font-weight: 900; background: linear-gradient(135deg, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .shadow-text { font-size: 1.2rem; color: var(--accent); font-weight: 700; margin-top: 1rem; height: 30px; }
+
+        /* Stats Cards */
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 3rem 0; }
+        .stat-card {
+            background: var(--card); padding: 2rem; border-radius: 20px; text-align: center;
+            border: 1px solid rgba(99, 102, 241, 0.2); transition: 0.3s;
         }
+        .stat-card:hover { transform: translateY(-10px); border-color: var(--primary); }
 
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-light);
-            transition: 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-purple);
-        }
-
-        /* قسم الهيرو */
-        .hero {
-            height: 80vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            flex-direction: column;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            background: linear-gradient(to right, #9d4edd, #5a189a);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: slideUp 1s ease-out;
-        }
-
-        /* نظام النشر */
-        .post-section {
-            padding: 50px 0;
-        }
-
+        /* Interactive Post Section */
         .post-input-container {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 30px;
+            background: var(--card); padding: 2rem; border-radius: 24px; margin-bottom: 3rem;
+            border: 1px solid var(--primary);
         }
-
         textarea {
-            width: 100%;
-            padding: 15px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            color: white;
-            resize: none;
-            margin-bottom: 10px;
+            width: 100%; background: var(--darker); border: 1px solid var(--text-muted);
+            border-radius: 12px; color: white; padding: 1rem; font-family: 'Cairo'; resize: none;
         }
-
         .btn-post {
-            background: var(--accent-purple);
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
+            margin-top: 1rem; background: var(--primary); color: white; border: none;
+            padding: 0.8rem 2rem; border-radius: 50px; cursor: pointer; font-weight: 700; transition: 0.3s;
         }
-
-        .btn-post:hover {
-            background: #7b2cbf;
-        }
+        .btn-post:hover { background: var(--secondary); transform: scale(1.05); }
 
         .post-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            animation: fadeIn 0.5s ease;
+            background: rgba(255, 255, 255, 0.03); padding: 1.5rem; border-radius: 15px;
+            margin-bottom: 1rem; border-right: 4px solid var(--accent); animation: fadeIn 0.5s ease;
         }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* ميديا كويري */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .nav-links { display: none; }
-        }
+        /* Footer */
+        footer { background: var(--dark); padding: 3rem 0; text-align: center; border-top: 1px solid var(--primary); }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
     </style>
 </head>
 <body>
 
-    <div id="particles-js"></div>
+    <div class="bg-animation"></div>
 
     <header>
         <div class="container">
             <nav>
-                <div class="logo">SONG JIN WOO</div>
-                <ul class="nav-links">
-                    <li><a href="#hero">الرئيسية</a></li>
-                    <li><a href="#posts">المنشورات</a></li>
-                </ul>
+                <a href="#" class="logo">
+                    <img src="https://github.com/SongJinwoo1/Bot-Song-Jin-Woo/blob/main/photo_5821173209150196869_y%20(1).jpg?raw=true" alt="Logo">
+                    <span>𝑩𝑶𝑻 𝑺𝒐𝒏𝒈 𝑱𝒊𝒏 𝑾𝒐𝒐</span>
+                </a>
+                <div style="color: var(--accent); font-weight: 900;">RANK: S</div>
             </nav>
         </div>
     </header>
 
-    <div class="container">
-        <section class="hero" id="hero">
-            <h1>أهلاً بك في نظام السيادة</h1>
-            <p>المطور الرسمي لبوت سونغ جين وو</p>
+    <main class="container">
+        <section class="hero">
+            <div class="hero-badge">⚡ النظام قيد التشغيل</div>
+            <h1>استيقظ.. (Arise)</h1>
+            <div class="shadow-text" id="typewriter"></div>
         </section>
 
-        <section class="post-section" id="posts">
-            <div class="post-input-container">
-                <textarea id="postContent" rows="3" placeholder="اكتب تحديثاً جديداً للنظام..."></textarea>
-                <button class="btn-post" onclick="addPost()">نشر التحديث</button>
+        <div class="stats">
+            <div class="stat-card">
+                <i class="fas fa-bolt" style="font-size: 2rem; color: var(--primary);"></i>
+                <h3>القوة</h3>
+                <p>999+ ليفل</p>
             </div>
+            <div class="stat-card">
+                <i class="fas fa-ghost" style="font-size: 2rem; color: var(--secondary);"></i>
+                <h3>جيش الظلال</h3>
+                <p>10,000+ جندي</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-shield-alt" style="font-size: 2rem; color: var(--accent);"></i>
+                <h3>الحماية</h3>
+                <p>تشفير ملكي</p>
+            </div>
+        </div>
 
-            <div id="postsList">
-                </div>
+        <section class="post-input-container">
+            <h2 style="margin-bottom: 1rem;"><i class="fas fa-pen-nib"></i> انشر مهامك اليومية</h2>
+            <textarea id="postContent" rows="3" placeholder="ماذا ستصطاد اليوم يا ملك؟"></textarea>
+            <button class="btn-post" onclick="addPost()">نشر في عالم الظلال</button>
         </section>
-    </div>
+
+        <div id="postsList">
+            </div>
+    </main>
+
+    <footer>
+        <p>© 2024 جميع الحقوق محفوظة لجيش الظلال</p>
+        <div style="margin-top: 1rem;">
+            <a href="#" style="color: var(--primary); margin: 0 10px;"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" style="color: var(--primary); margin: 0 10px;"><i class="fab fa-github"></i></a>
+        </div>
+    </footer>
 
     <script>
-        // إعداد الجزيئات
-        particlesJS('particles-js', {
-            particles: {
-                number: { value: 80, density: { enable: true, value_area: 800 } },
-                color: { value: "#9d4edd" },
-                shape: { type: "circle" },
-                opacity: { value: 0.5 },
-                size: { value: 3 },
-                line_linked: { enable: true, distance: 150, color: "#9d4edd", opacity: 0.4, width: 1 },
-                move: { enable: true, speed: 6 }
-            },
-            interactivity: {
-                detect_on: "canvas",
-                events: { onhover: { enable: true, mode: "repulse" } }
-            }
-        });
-
-        // وظيفة إضافة منشور
-        function addPost() {
-            const content = document.getElementById('postContent').value;
-            if (content.trim() !== '') {
-                const postsList = document.getElementById('postsList');
-                const newPost = document.createElement('div');
-                newPost.className = 'post-card';
-                newPost.innerHTML = `
-                    <div style="color: #9d4edd; font-weight: bold; margin-bottom: 10px;">تحديث جديد:</div>
-                    <p>${content}</p>
-                    <div style="font-size: 12px; color: #666; margin-top: 10px;">${new Date().toLocaleString('ar-SA')}</div>
-                `;
-                postsList.insertBefore(newPost, postsList.firstChild);
-                document.getElementById('postContent').value = '';
+        // 1. تأثير الآلة الكاتبة (Typewriter)
+        const text = "أنا أرتقي... لذا عليك أن تطيع أو تموت!";
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                document.getElementById("typewriter").innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
             }
         }
+        window.onload = typeWriter;
+
+        // 2. نظام إضافة المنشورات تفاعلياً
+        function addPost() {
+            const content = document.getElementById('postContent').value;
+            if (content.trim() === "") {
+                alert("اكتب شيئاً أولاً!");
+                return;
+            }
+
+            const postsList = document.getElementById('postsList');
+            const newPost = document.createElement('div');
+            newPost.className = 'post-card';
+            
+            const date = new Date().toLocaleTimeString('ar-SA');
+            
+            newPost.innerHTML = `
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <strong style="color: var(--primary);">الملك (أنت)</strong>
+                    <small style="color: var(--text-muted);">${date}</small>
+                </div>
+                <p>${content}</p>
+                <div style="margin-top: 10px; font-size: 0.8rem; color: var(--accent);">
+                    <i class="fas fa-check-circle"></i> تم التحقق من المهمة
+                </div>
+            `;
+            
+            postsList.insertBefore(newPost, postsList.firstChild);
+            document.getElementById('postContent').value = "";
+        }
+
+        // 3. تأثير الـ Parallax للبطاقات
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.stat-card');
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const cardX = rect.left + rect.width / 2;
+                const cardY = rect.top + rect.height / 2;
+
+                const angleX = (mouseY - cardY) / 25;
+                const angleY = (cardX - mouseX) / 25;
+
+                card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg)`;
+            });
+        });
     </script>
 </body>
 </html>
