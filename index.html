@@ -3,36 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام أرتقاء الظلال | SJW SYSTEM</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <meta name="google-site-verification" content="Ra-i2hY-UhtavYoB6D2GB9lHAiLy1h6AodvsXqD-tj0" />
+    
+    <title>شروط الخدمة | 𝑩𝑶𝑻 𝑺𝒐𝒏𝒈 𝑱𝒊𝒏 𝑾𝒐𝒐</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/particles.js@2.0.0/particles.min.js"></script>
+    
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #a855f7;
+            --accent: #ec4899;
+            --dark-bg: #0b0b14;
+            --card-bg: #161625;
+            --sidebar-bg: #11111f;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* خلفية الجزيئات المخصصة */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            top: 0;
+            left: 0;
+        }
+
+        .content-wrapper { position: relative; z-index: 2; }
+
+        /* Header & Hero */
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.15));
+            padding: 5rem 1rem;
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .typewriter-box {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-top: 1rem;
+            min-height: 1.5em;
+        }
+
+        /* Layout */
+        .container {
+            display: flex;
+            max-width: 1300px;
+            margin: 3rem auto;
+            gap: 2rem;
+            padding: 0 1rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 300px;
+            background: var(--sidebar-bg);
+            border-radius: 20px;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            transition: 0.3s;
+        }
+
+        .sidebar-link:hover, .sidebar-link.active {
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary);
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.1);
+        }
+
+        /* Content Cards */
+        .main-content { flex: 1; }
+        .card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        @media (max-width: 992px) {
+            .container { flex-direction: column; }
+            .sidebar { width: 100%; position: static; }
+        }
+    </style>
 </head>
 <body>
-    <canvas id="bgCanvas"></canvas>
 
-    <div class="hub">
-        <img src="https://github.com/SongJinwoo1/Bot-Song-Jin-Woo/blob/main/photo_5821173209150196869_y%20(1).jpg?raw=true" class="main-logo">
-        <h1 class="system-title">𝑺𝑱𝑾 𝑺𝒀𝑺𝑻𝑬𝑴 v2.0</h1>
-        
-        <div class="actions">
-            <button class="btn-summon" onclick="openModal('commands', 'photo_5823313378468892172_y.jpg')">بوابة الأوامر</button>
-            <button class="btn-summon" onclick="openModal('rank', 'photo_5823313378468892171_y.jpg')">سجل التصنيفات</button>
-            <button class="btn-summon" onclick="openModal('shop', 'photo_5823313378468892170_y.jpg')">متجر المانا</button>
-            <button class="btn-summon" onclick="openModal('system', 'photo_5823313378468892173_y.jpg')">نظام السيستم</button>
-            <button class="btn-summon" onclick="openModal('guilds')">اتحاد النقابات</button>
-            <button class="btn-summon" onclick="openModal('king')">الديوان الملكي</button>
+    <div id="particles-js"></div>
+
+    <div class="content-wrapper">
+        <header class="hero-banner">
+            <h1 style="font-size: 3.5rem;">استيقظ.. <span style="color: var(--primary);">Arise</span></h1>
+            <div class="typewriter-box" id="typewriter"></div>
+        </header>
+
+        <div class="container">
+            <aside class="sidebar">
+                <h3 style="color: #fff; margin-bottom: 1.5rem; border-right: 3px solid var(--accent); padding-right: 10px;">أقسام النظام</h3>
+                <a href="#rules" class="sidebar-link active"><i class="fas fa-gavel"></i> قوانين الفيلق</a>
+                <a href="#privacy" class="sidebar-link"><i class="fas fa-shield-alt"></i> حماية الظلال</a>
+                <a href="#rank" class="sidebar-link"><i class="fas fa-trophy"></i> نظام الرتب</a>
+                
+                <div style="margin-top: 2rem; padding: 15px; background: rgba(236, 72, 153, 0.05); border-radius: 10px; border: 1px dashed var(--accent);">
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">حالة التحقق:</p>
+                    <p style="color: #22c55e; font-weight: bold;"><i class="fas fa-check-circle"></i> Google Verified</p>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                <section id="rules" class="card">
+                    <h2 class="section-title"><i class="fas fa-scroll"></i> شروط الاستخدام</h2>
+                    <p style="line-height: 2; color: var(--text-muted);">
+                        باستخدامك لهذا البوت، فإنك تلتزم بكافة معايير الأمان وقوانين منصة الواتساب. يُمنع منعاً باتاً استخراج البيانات أو محاولة تخريب النظام.
+                    </p>
+                </section>
+
+                <section id="privacy" class="card">
+                    <h2 class="section-title"><i class="fas fa-user-lock"></i> الخصوصية والأمان</h2>
+                    <p style="color: var(--text-muted);">
+                        نحن نستخدم تقنيات متطورة تشبه "جيش الظلال" في حماية بياناتك. لا يتم تخزين المحادثات الشخصية، فقط البيانات التقنية اللازمة لتشغيل الأوامر.
+                    </p>
+                </section>
+            </main>
         </div>
     </div>
 
-    <div class="modal" id="systemModal">
-        <div class="modal-body">
-            <img id="modalImage" src="" class="section-img" style="display:none">
-            <h2 id="modalTitle"></h2>
-            <div id="modalContent"></div>
-            <button class="btn-summon close-btn" onclick="closeModal()">إغلاق</button>
-        </div>
-    </div>
+    <script>
+        // إعداد الجزيئات باللون الأزرق والبنفسجي كما طلبت
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 60 },
+                color: { value: ["#6366f1", "#a855f7"] }, // أزرق وبنفسجي
+                shape: { type: "circle" },
+                opacity: { value: 0.4 },
+                size: { value: 3 },
+                line_linked: { enable: true, distance: 150, color: "#6366f1", opacity: 0.2, width: 1 },
+                move: { enable: true, speed: 2 }
+            }
+        });
 
-    <script src="script.js"></script>
+        // تأثير الآلة الكاتبة
+        const text = "أنا أرتقي... لذا عليك أن تطيع أو تموت!";
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                document.getElementById("typewriter").innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+        window.onload = typeWriter;
+    </script>
 </body>
 </html>
