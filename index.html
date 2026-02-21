@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="google-site-verification" content="Ra-i2hY-UhtavYoB6D2GB9lHAiLy1h6AodvsXqD-tj0" />
+    
     <title>شروط الخدمة | 𝑩𝑶𝑻 𝑺𝒐𝒏𝒈 𝑱𝒊𝒏 𝑾𝒐𝒐</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/particles.js@2.0.0/particles.min.js"></script>
+    
     <style>
         :root {
             --primary: #6366f1;
@@ -19,26 +26,52 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Cairo', sans-serif;
             background-color: var(--dark-bg);
             color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* التصميم الهيكلي (Layout) مشابه لـ Madara */
-        .wrapper {
+        /* خلفية الجزيئات المتحركة */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            top: 0;
+            left: 0;
+        }
+
+        .content-wrapper { position: relative; z-index: 2; }
+
+        /* الهيدر والمقدمة */
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+            padding: 6rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .typewriter-box {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-top: 1rem;
+            min-height: 1.5em;
+        }
+
+        /* تنظيم الصفحة (Layout) */
+        .container {
             display: flex;
-            max-width: 1400px;
-            margin: 2rem auto;
+            max-width: 1300px;
+            margin: 3rem auto;
             gap: 2rem;
             padding: 0 1rem;
-            flex: 1;
         }
 
-        /* القائمة الجانبية - Sidebar */
+        /* القائمة الجانبية (Sidebar) */
         .sidebar {
             width: 300px;
             background: var(--sidebar-bg);
@@ -46,57 +79,37 @@
             padding: 1.5rem;
             height: fit-content;
             position: sticky;
-            top: 100px;
-            border: 1px solid rgba(99, 102, 241, 0.1);
-        }
-
-        .sidebar h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-            border-bottom: 2px solid var(--primary);
-            padding-bottom: 0.5rem;
+            top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .sidebar-link {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             color: var(--text-muted);
             text-decoration: none;
-            padding: 0.8rem 1rem;
-            border-radius: 10px;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 8px;
             transition: 0.3s;
-            margin-bottom: 0.5rem;
         }
 
         .sidebar-link:hover, .sidebar-link.active {
             background: rgba(99, 102, 241, 0.1);
             color: var(--primary);
-            transform: translateX(-5px);
         }
 
         /* المحتوى الرئيسي */
-        .main-content {
-            flex: 1;
-        }
-
-        .terms-card {
+        .main-content { flex: 1; }
+        
+        .card {
             background: var(--card-bg);
             border-radius: 24px;
             padding: 2.5rem;
             margin-bottom: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .terms-card::before {
-            content: '';
-            position: absolute;
-            top: 0; right: 0; width: 4px; height: 100%;
-            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
 
         .section-title {
@@ -105,100 +118,82 @@
             gap: 15px;
             font-size: 1.8rem;
             margin-bottom: 1.5rem;
-            color: #fff;
+            color: var(--primary);
         }
 
-        .section-title i { color: var(--primary); }
-
-        /* اليافطة المتحركة (Hero) */
-        .hero-banner {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
-            padding: 4rem 2rem;
-            text-align: center;
-            border-bottom: 1px solid var(--primary);
-            margin-bottom: 2rem;
-        }
-
-        .typewriter-box {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent);
-            text-shadow: 0 0 10px rgba(236, 72, 153, 0.3);
-            margin-top: 1rem;
-            min-height: 1.6em;
-        }
-
-        /* نظام النشر التفاعلي */
-        .post-box {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 2rem;
-            border: 1px dashed var(--primary);
-        }
-
-        textarea {
-            width: 100%; background: #000; border: 1px solid #333;
-            color: white; padding: 15px; border-radius: 10px; resize: none;
-        }
-
-        /* Responsive */
+        /* التجاوب مع الجوال */
         @media (max-width: 992px) {
-            .wrapper { flex-direction: column; }
+            .container { flex-direction: column; }
             .sidebar { width: 100%; position: static; }
         }
     </style>
 </head>
 <body>
 
-    <header class="hero-banner">
-        <h1 style="font-size: 3rem; margin-bottom: 10px;">استيقظ.. <span style="color: var(--primary);">Arise</span></h1>
-        <p style="color: var(--text-muted);">نظام سونغ جين وو لإدارة الظلال والخدمات</p>
-        <div class="typewriter-box" id="typewriter"></div>
-    </header>
+    <div id="particles-js"></div>
 
-    <div class="wrapper">
-        <aside class="sidebar">
-            <h3>قائمة التنقل</h3>
-            <a href="#intro" class="sidebar-link active"><i class="fas fa-info-circle"></i> مقدمة</a>
-            <a href="#terms" class="sidebar-link"><i class="fas fa-file-contract"></i> شروط الاستخدام</a>
-            <a href="#privacy" class="sidebar-link"><i class="fas fa-user-shield"></i> الخصوصية</a>
-            <a href="#community" class="sidebar-link"><i class="fas fa-users"></i> المجتمع</a>
-            <div class="post-box">
-                <p style="font-size: 0.9rem; margin-bottom: 10px;">انشر مهمة سريعة:</p>
-                <textarea id="quickPost" rows="2" placeholder="اكتب هنا..."></textarea>
-                <button onclick="publishPost()" style="width: 100%; margin-top: 10px; background: var(--primary); border: none; color: white; padding: 8px; border-radius: 5px; cursor: pointer;">نشر</button>
-            </div>
-        </aside>
+    <div class="content-wrapper">
+        <header class="hero-banner">
+            <h1 style="font-size: 3.5rem; letter-spacing: 2px;">استيقظ.. <span style="color: var(--primary);">Arise</span></h1>
+            <div class="typewriter-box" id="typewriter"></div>
+        </header>
 
-        <main class="main-content">
-            <section id="intro" class="terms-card">
-                <h2 class="section-title"><i class="fas fa-crown"></i> رتبة الصياد</h2>
-                <p>مرحباً بك في نظام بوت سونغ جين وو. هنا لا توجد حدود للقوة، فقط القواعد التي تحكم جيش الظلال لضمان تجربة آمنة وقوية لجميع الصيادين.</p>
-            </section>
+        <div class="container">
+            <aside class="sidebar">
+                <h3 style="color: #fff; margin-bottom: 1.5rem; border-right: 4px solid var(--accent); padding-right: 12px;">نظام الظلال</h3>
+                <a href="#rules" class="sidebar-link active"><i class="fas fa-gavel"></i> قوانين الفيلق</a>
+                <a href="#privacy" class="sidebar-link"><i class="fas fa-shield-alt"></i> حماية البيانات</a>
+                <a href="#rank" class="sidebar-link"><i class="fas fa-trophy"></i> نظام الرتب</a>
+                
+                <div style="margin-top: 2rem; padding: 15px; background: rgba(34, 197, 94, 0.05); border-radius: 12px; border: 1px dashed #22c55e;">
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">حالة التحقق:</p>
+                    <p style="color: #22c55e; font-weight: bold;"><i class="fas fa-check-circle"></i> Google Verified</p>
+                </div>
+            </aside>
 
-            <section id="terms" class="terms-card">
-                <h2 class="section-title"><i class="fas fa-scroll"></i> قوانين النظام</h2>
-                <ul style="list-style: none; color: var(--text-muted);">
-                    <li style="margin-bottom: 15px; padding-right: 15px; border-right: 2px solid var(--primary);">
-                        <strong>الاحترام المتبادل:</strong> يُمنع استخدام البوت لإهانة أي عضو في الفيلق.
-                    </li>
-                    <li style="margin-bottom: 15px; padding-right: 15px; border-right: 2px solid var(--primary);">
-                        <strong>إساءة الاستخدام:</strong> أي محاولة لتخريب أكواد البوت ستؤدي إلى "الاستخراج" (الباند النهائي).
-                    </li>
-                </ul>
-            </section>
+            <main class="main-content">
+                <section id="rules" class="card">
+                    <h2 class="section-title"><i class="fas fa-scroll"></i> شروط الاستخدام</h2>
+                    <p style="line-height: 2; color: var(--text-muted); font-size: 1.1rem;">
+                        باستخدامك لبوت **Song Jin Woo**، فإنك تدخل في عهد مع ملك الظلال. يجب عليك الالتزام بقواعد الاحترام وعدم محاولة تخريب النظام أو استغلال الثغرات. أي انتهاك سيؤدي إلى حظر نهائي من الفيلق.
+                    </p>
+                </section>
 
-            <section id="privacy" class="terms-card">
-                <h2 class="section-title"><i class="fas fa-eye-slash"></i> حماية الظلال</h2>
-                <p>بياناتك محمية داخل قلعة الظلال. نحن نجمع فقط معرف المستخدم لربطه برتبتك داخل النظام، ولا يتم مشاركة أي معلومات مع "النقابات" الخارجية.</p>
-            </section>
-        </main>
+                <section id="rank" class="card">
+                    <h2 class="section-title"><i class="fas fa-star"></i> نظام الرتب (Hunter Rank)</h2>
+                    <p style="color: var(--text-muted); line-height: 1.8;">
+                        نظامنا يعتمد على التفاعل والمهمات. تبدأ كرتبة **E** وتتصاعد قوتك حتى تصل إلى رتبة **S** ولقب **ملك الظلال**. كل رتبة تفتح لك ميزات سرية داخل البوت.
+                    </p>
+                </section>
+            </main>
+        </div>
     </div>
 
     <script>
-        // تأثير الآلة الكاتبة المطور
-        const text = "أنا أرتقي... لذا عليك أن تطيع أو تموت!";
+        // إعداد الجزيئات باللون الأزرق والبنفسجي
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 70 },
+                color: { value: ["#6366f1", "#a855f7"] },
+                shape: { type: "circle" },
+                opacity: { value: 0.5 },
+                size: { value: 3 },
+                line_linked: { 
+                    enable: true, 
+                    distance: 150, 
+                    color: "#6366f1", 
+                    opacity: 0.2, 
+                    width: 1 
+                },
+                move: { enable: true, speed: 2.5 }
+            },
+            interactivity: {
+                events: { onhover: { enable: true, mode: "repulse" } }
+            }
+        });
+
+        // تأثير الآلة الكاتبة (Typewriter)
+        const text = "نظام سونغ جين وو لإدارة الظلال والخدمات..";
         let i = 0;
         function typeWriter() {
             if (i < text.length) {
@@ -208,35 +203,6 @@
             }
         }
         window.onload = typeWriter;
-
-        // وظيفة النشر السريع
-        function publishPost() {
-            const content = document.getElementById('quickPost').value;
-            if(content) {
-                alert("تم إرسال المهمة إلى جيش الظلال: " + content);
-                document.getElementById('quickPost').value = "";
-            }
-        }
-
-        // تحريك الـ Active Link عند السكرول (محاكاة Madara)
-        window.addEventListener('scroll', () => {
-            let current = "";
-            const sections = document.querySelectorAll('section');
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 150) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            document.querySelectorAll('.sidebar-link').forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').includes(current)) {
-                    link.classList.add('active');
-                }
-            });
-        });
     </script>
 </body>
 </html>
-<meta name="google-site-verification" content="Ra-i2hY-UhtavYoB6D2GB9lHAiLy1h6AodvsXqD-tj0" />
