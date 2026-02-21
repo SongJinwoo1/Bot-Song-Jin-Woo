@@ -3,241 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام أرتقاء الظلال | 𝑩𝑶𝑻 𝑺𝒐𝒏𝒈 𝑱𝒊𝒏 𝑾𝒐𝒐</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <title>نظام أرتقاء الظلال | 𝑺𝒐𝒏𝒈 𝑱𝒊𝒏 𝑾𝒐𝒐</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #6366f1;
-            --secondary: #a855f7;
-            --accent: #ec4899;
-            --bg: #030308;
-            --card-bg: #0c0c1d;
-            --shadow-glow: rgba(99, 102, 241, 0.4);
+            --primary: #6366f1; --secondary: #a855f7; --accent: #ec4899;
+            --bg: #020205; --card: #0a0a1a;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
         body {
-            font-family: 'Cairo', sans-serif;
-            background-color: var(--bg);
-            color: white;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-family: 'Cairo', sans-serif; background: var(--bg);
+            color: white; height: 100vh; overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
         }
 
-        /* شاشة التحميل (Loading) */
-        #loading-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 9999; display: flex;
-            flex-direction: column; align-items: center; justify-content: center;
-            transition: 1s ease-in-out;
-        }
-        .eyes { display: flex; gap: 40px; margin-bottom: 20px; }
-        .eye { 
-            width: 60px; height: 20px; background: var(--primary); 
-            border-radius: 50%; box-shadow: 0 0 30px var(--primary);
-            filter: blur(2px); animation: blink 2s infinite;
-        }
-        @keyframes blink { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
+        /* محرك الدخان والخلفية */
+        canvas { position: fixed; top: 0; left: 0; z-index: 1; pointer-events: none; }
 
-        /* مؤشر الماوس المخصص */
-        #cursor-trail {
-            position: fixed; width: 10px; height: 10px;
-            background: var(--secondary); border-radius: 50%;
-            pointer-events: none; z-index: 10000;
-            box-shadow: 0 0 15px var(--secondary);
-            transition: transform 0.1s;
+        /* شاشة التحميل الملكية */
+        #loading {
+            position: fixed; inset: 0; background: #000; z-index: 9999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: 1.5s ease-out;
         }
+        .loading-eyes { 
+            width: 150px; height: 40px; background: radial-gradient(ellipse, var(--primary) 0%, transparent 70%);
+            box-shadow: 0 0 50px var(--primary); border-radius: 50%; animation: blink 2s infinite;
+        }
+        @keyframes blink { 0%, 100% { opacity: 0.3; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } }
 
-        /* شريط الرتبة */
-        .rank-bar {
-            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-            width: 300px; height: 10px; background: #111;
-            border-radius: 10px; border: 1px solid #333; z-index: 100;
+        /* شريط الرتبة المتطور */
+        .rank-container {
+            position: fixed; top: 30px; width: 320px; z-index: 100; text-align: center;
         }
-        #rank-progress {
-            width: 5%; height: 100%; background: linear-gradient(to left, var(--primary), var(--accent));
-            border-radius: 10px; transition: 1s; box-shadow: 0 0 10px var(--primary);
-        }
-        .rank-label { 
-            position: absolute; top: -25px; width: 100%; text-align: center;
-            font-size: 0.8rem; font-weight: 700; color: var(--primary);
-        }
+        .rank-text { font-weight: 900; font-size: 1.2rem; color: var(--primary); text-shadow: 0 0 10px var(--primary); margin-bottom: 5px; }
+        .rank-bar-bg { width: 100%; height: 8px; background: #111; border-radius: 10px; border: 1px solid #333; overflow: hidden; }
+        #rank-fill { width: 10%; height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: 1.5s cubic-bezier(0.22, 1, 0.36, 1); box-shadow: 0 0 15px var(--primary); }
 
         /* الواجهة المركزية */
-        .hub { text-align: center; perspective: 1000px; z-index: 10; }
-        .main-logo-container { position: relative; display: inline-block; transition: 0.1s; }
+        .main-hub { position: relative; z-index: 10; text-align: center; }
+        .logo-box {
+            position: relative; width: 240px; height: 240px; margin: 0 auto 20px;
+            transition: 0.1s ease-out; transform-style: preserve-3d;
+        }
         .main-logo {
-            width: 220px; height: 220px; border-radius: 50%;
-            border: 3px solid var(--primary); box-shadow: 0 0 40px var(--primary);
-            animation: pulse 4s infinite;
+            width: 100%; height: 100%; border-radius: 50%;
+            border: 4px solid var(--primary); box-shadow: 0 0 50px var(--primary);
+            object-fit: cover; pointer-events: none;
         }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
-        /* الأزرار الدائرية */
+        /* أزرار الاستدعاء */
         .actions-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
-            margin-top: 30px; max-width: 450px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 500px; margin-top: 30px;
         }
-        .btn-summon {
-            background: rgba(15, 15, 35, 0.8); color: white;
-            border: 1px solid var(--primary); padding: 15px 25px;
-            border-radius: 15px; font-weight: 900; transition: 0.3s;
-            display: flex; align-items: center; gap: 10px;
-            backdrop-filter: blur(5px);
+        .summon-btn {
+            background: rgba(10, 10, 30, 0.7); color: white; border: 1px solid var(--primary);
+            padding: 15px 30px; border-radius: 15px; font-weight: 900; 
+            transition: 0.4s; backdrop-filter: blur(10px);
+            display: flex; align-items: center; justify-content: center; gap: 10px;
         }
-        .btn-summon:hover {
-            background: var(--primary); transform: translateY(-5px);
-            box-shadow: 0 10px 25px var(--shadow-glow);
+        .summon-btn:hover {
+            background: var(--primary); transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 40px var(--primary);
         }
 
-        /* نظام اللفائف (Modals) */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); display: none;
-            justify-content: center; align-items: center; z-index: 2000;
+        /* اللفائف (Modals) */
+        .modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+            display: none; align-items: center; justify-content: center; z-index: 2000;
+            backdrop-filter: blur(15px);
         }
-        .modal-scroll {
-            background: var(--card-bg); width: 90%; max-width: 500px;
-            padding: 30px; border-radius: 20px; border: 2px solid var(--primary);
-            transform: scale(0.8); opacity: 0; transition: 0.3s;
-            max-height: 80vh; overflow-y: auto;
-        }
-        .modal-overlay.active { display: flex; animation: screenShake 0.3s; }
-        .modal-overlay.active .modal-scroll { transform: scale(1); opacity: 1; }
+        .modal.active { display: flex; animation: arise 0.5s ease-out; }
+        @keyframes arise { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
 
-        @keyframes screenShake {
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); }
-            40% { transform: translate(3px, 2px) rotate(-1deg); }
-            100% { transform: translate(0, 0) rotate(0deg); }
+        .scroll-paper {
+            background: var(--card); width: 90%; max-width: 600px; padding: 40px;
+            border-radius: 20px; border: 2px solid var(--primary);
+            max-height: 85vh; overflow-y: auto; position: relative;
         }
+        .close-btn { position: absolute; top: 20px; left: 20px; font-size: 2rem; color: #555; transition: 0.3s; }
+        .close-btn:hover { color: var(--accent); transform: rotate(90deg); }
 
         .law-card {
-            background: rgba(255,255,255,0.03); padding: 15px;
-            border-radius: 12px; margin-bottom: 10px; border-right: 4px solid var(--accent);
+            background: rgba(255,255,255,0.03); padding: 18px; border-radius: 12px;
+            margin-bottom: 15px; border-right: 5px solid var(--primary);
+            transition: 0.3s;
         }
+        .law-card:hover { background: rgba(99, 102, 241, 0.1); transform: translateX(-10px); }
 
-        /* الحقوق */
-        .footer { position: fixed; bottom: 15px; font-size: 0.75rem; color: #555; }
+        .rights { position: fixed; bottom: 20px; font-size: 0.8rem; color: #444; letter-spacing: 2px; }
 
-        /* Responsive */
-        @media (max-width: 500px) {
-            .actions-grid { grid-template-columns: 1fr; width: 90vw; }
-            .main-logo { width: 170px; height: 170px; }
+        @media (max-width: 600px) {
+            .actions-grid { grid-template-columns: 1fr; width: 85vw; }
+            .logo-box { width: 180px; height: 180px; }
         }
     </style>
 </head>
 <body>
 
-    <div id="cursor-trail"></div>
+    <canvas id="smokeCanvas"></canvas>
 
-    <div id="loading-screen">
-        <div class="eyes">
-            <div class="eye"></div>
-            <div class="eye"></div>
-        </div>
-        <p id="load-text">يتم فحص الرتبة...</p>
+    <div id="loading">
+        <div class="loading-eyes"></div>
+        <h2 style="margin-top:20px; letter-spacing:5px;">SYSTEM LOADING...</h2>
     </div>
 
-    <div class="rank-bar">
-        <div class="rank-label">RANK: <span id="rank-name">E</span></div>
-        <div id="rank-progress"></div>
+    <div class="rank-container">
+        <div class="rank-text">RANK: <span id="rankName">E</span></div>
+        <div class="rank-bar-bg"><div id="rank-fill"></div></div>
     </div>
 
-    <div class="hub" id="main-hub">
-        <div class="main-logo-container" id="logo-tilt">
-            <img src="https://github.com/SongJinwoo1/Bot-Song-Jin-Woo/blob/main/photo_5821173209150196869_y%20(1).jpg?raw=true" class="main-logo" alt="Logo">
+    <main class="main-hub">
+        <div class="logo-box" id="tiltLogo">
+            <img src="https://github.com/SongJinwoo1/Bot-Song-Jin-Woo/blob/main/photo_5821173209150196869_y%20(1).jpg?raw=true" class="main-logo">
         </div>
-        
-        <h2 style="margin-top: 15px; letter-spacing: 2px;">SONG JIN WOO SYSTEM</h2>
+        <h1 style="font-weight:900; text-shadow: 0 0 20px var(--primary);">SONG JIN WOO SYSTEM</h1>
         
         <div class="actions-grid">
-            <button class="btn-summon" onclick="openScroll('laws-modal')">
-                <i class="fas fa-scroll"></i> دستور الملك
-            </button>
-            <button class="btn-summon" onclick="openScroll('contact-modal')">
-                <i class="fas fa-fist-raised"></i> فيلق الدعم
-            </button>
-            <button class="btn-summon" onclick="openScroll('about-modal')">
-                <i class="fas fa-magic"></i> عن النظام
-            </button>
-            <button class="btn-summon" onclick="window.open('https://whatsapp.com/channel/0029VbCMlkj2ER6nzLnwpO3G')">
-                <i class="fas fa-crown"></i> القناة الملكية
-            </button>
+            <button class="summon-btn" onclick="openModal('laws')"><i class="fas fa-scroll"></i> دستور الملك</button>
+            <button class="summon-btn" onclick="openModal('about')"><i class="fas fa-info-circle"></i> عن النظام</button>
+            <button class="summon-btn" onclick="openModal('support')"><i class="fas fa-headset"></i> فيلق الدعم</button>
+            <button class="summon-btn" onclick="window.open('https://whatsapp.com/channel/0029VbCMlkj2ER6nzLnwpO3G')"><i class="fas fa-bullhorn"></i> القناة الرسمية</button>
+        </div>
+    </main>
+
+    <div class="modal" id="modal-laws">
+        <div class="scroll-paper">
+            <i class="fas fa-times close-btn" onclick="closeModal()"></i>
+            <h2 style="color:var(--primary); margin-bottom:30px; text-align:center;">📜 قوانين عهد الظلال السبعة</h2>
+            <div id="lawsContainer"></div>
         </div>
     </div>
 
-    <div class="modal-overlay" id="laws-modal">
-        <div class="modal-scroll">
-            <h2 style="color:var(--primary); margin-bottom:20px;">📜 عهد الظلال السبعة</h2>
-            <div id="laws-list"></div>
-            <button onclick="closeScroll('laws-modal')" style="margin-top:20px; width:100%; padding:10px; background:var(--accent); border:none; color:white; border-radius:10px;">إغلاق</button>
+    <div class="modal" id="modal-about">
+        <div class="scroll-paper">
+            <i class="fas fa-times close-btn" onclick="closeModal()"></i>
+            <h2 style="color:var(--primary); margin-bottom:20px;">💎 أرتقاء المستوى 3.0</h2>
+            <p style="line-height:2; color:#ccc;">هذا النظام هو المحاكاة الرقمية لـ <strong>Solo Leveling</strong> على واتساب. تم تصميمه ليوفر قوة الملك "سونغ جين وو" لكل مستخدم من خلال أوامر تفاعلية، نظام رتب حقيقي، وجيش ظلال لا يقهر.</p>
         </div>
     </div>
 
-    <div class="footer">جميع الحقوق محفوظة © 2024 | تم التطوير بواسطة ملك الظلال</div>
+    <div class="modal" id="modal-support">
+        <div class="scroll-paper" style="text-align:center;">
+            <i class="fas fa-times close-btn" onclick="closeModal()"></i>
+            <h2 style="color:var(--primary); margin-bottom:30px;">📞 نداء الاستغاثة</h2>
+            <div class="law-card" style="border-right:none; border-bottom:3px solid #25d366; cursor:pointer;" onclick="window.open('https://chat.whatsapp.com/JILd7b6sW0JFk4bYPVzRrw')">
+                <i class="fab fa-whatsapp" style="font-size:2rem; color:#25d366;"></i>
+                <h4>جروب الدعم الرسمي</h4>
+            </div>
+            <p style="margin-top:20px; color:#555;">سيتم إضافة المزيد من سبل التواصل قريباً...</p>
+        </div>
+    </div>
+
+    <div class="rights">تم التطوير بواسطة ملك الظلال © 2024</div>
 
     <script>
-        // 1. تأثير التحميل
-        setTimeout(() => {
-            document.getElementById('loading-screen').style.opacity = '0';
-            setTimeout(() => { document.getElementById('loading-screen').style.display = 'none'; }, 1000);
-        }, 3000);
-
-        // 2. مؤشر الماوس
-        const trail = document.getElementById('cursor-trail');
-        document.addEventListener('mousemove', (e) => {
-            trail.style.left = e.clientX + 'px';
-            trail.style.top = e.clientY + 'px';
-            
-            // تأثير الميلان للشعار
-            const logo = document.getElementById('logo-tilt');
-            const x = (window.innerWidth / 2 - e.clientX) / 20;
-            const y = (window.innerHeight / 2 - e.clientY) / 20;
-            logo.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
-        });
-
-        // 3. نظام القوانين
-        const laws = [
-            "يُمنع نسب الكود أو الحقوق لغير المطور.",
-            "أي محاولة تلاعب بالرتب تعني الحظر النهائي.",
-            "يُمنع طلب محتوى يسيء للأخلاق أو الأديان.",
-            "إزالة حقوق المطور من الأوامر تعتبر خيانة للعهد.",
-            "استغلال الثغرات دون التبليغ عنها يؤدي للحظر.",
-            "المطور له الحق الكامل في إدارة الرتب والحظر.",
-            "الاحترام المتبادل بين أعضاء الفيلق واجب أساسي."
-        ];
-        const list = document.getElementById('laws-list');
-        laws.forEach((l, i) => {
-            list.innerHTML += `<div class="law-card"><strong>${i+1}.</strong> ${l}</div>`;
-        });
-
-        // 4. نظام الرتب واللفائف
-        let progress = 5;
-        function openScroll(id) {
-            document.getElementById(id).classList.add('active');
-            if(progress < 100) {
-                progress += 25;
-                document.getElementById('rank-progress').style.width = progress + '%';
-                updateRank(progress);
+        // 1. محرك الدخان (Smoke Engine)
+        const canvas = document.getElementById('smokeCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let particles = [];
+        class Particle {
+            constructor(x, y) {
+                this.x = x; this.y = y;
+                this.size = Math.random() * 40 + 20;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * -1 - 0.5;
+                this.color = 'rgba(99, 102, 241, 0.05)';
+            }
+            update() { this.x += this.speedX; this.y += this.speedY; if (this.size > 0.2) this.size -= 0.1; }
+            draw() { ctx.fillStyle = this.color; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
+        }
+        function handleParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update(); particles[i].draw();
+                if (particles[i].size <= 0.2) { particles.splice(i, 1); i--; }
             }
         }
+        document.addEventListener('mousemove', (e) => {
+            for(let i=0; i<3; i++) particles.push(new Particle(e.clientX, e.clientY));
+            // تحريك الشعار
+            const logo = document.getElementById('tiltLogo');
+            const x = (window.innerWidth/2 - e.clientX)/15;
+            const y = (window.innerHeight/2 - e.clientY)/15;
+            logo.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+        });
+        function animate() { ctx.clearRect(0,0,canvas.width, canvas.height); handleParticles(); requestAnimationFrame(animate); }
+        animate();
 
-        function closeScroll(id) {
-            document.getElementById(id).classList.remove('active');
+        // 2. القوانين الـ 9 النهائية
+        const laws = [
+            {t:"الملكية الفكرية", d:"يُمنع منعاً باتاً فك تشفير برمجية البوت أو نسب الكود لنفسك. القوة تعود للملك وحده."},
+            {t:"مسؤولية النقابات", d:"عند إضافة البوت لمجموعتك، أنت المسؤول عن سلوك الأعضاء. أي استغلال للثغرات سيؤدي لحظر النقابة."},
+            {t:"الصيانة والارتقاء", d:"يخضع النظام لتحديثات مفاجئة لتطوير القوى، ولا يحق للمطالبة بتعويض عن فترة التوقف."},
+            {t:"حقوق المطور", d:"شعار وحقوق البوت يجب أن تظل ظاهرة في جميع الأوامر. إزالتها تعني نهاية خدمتك."},
+            {t:"منع التلاعب", d:"يُمنع استخدام أدوات خارجية للحصول على رتب بطريقة غير شرعية. التلاعب يؤدي لتصفير البيانات."},
+            {t:"السلوك العام", d:"يُمنع استخدام البوت في الترويج لمحتوى مسيء للأديان أو الأخلاق. نحن نرتقي لا نسيء."},
+            {t:"الحساب الواحد", d:"يُمنع إنشاء حسابات وهمية متعددة للتلاعب بالنظام. لكل صياد مسار واحد فقط."},
+            {t:"الصمت الإجباري", d:"قرار الحظر نهائي. محاولة إغراق الدعم الفني بالرسائل الاعتراضية تزيد مدة العقوبة."},
+            {t:"الإبلاغ عن الثغرات", d:"اكتشاف ثغرة وعدم الإبلاغ عنها يُعد خيانة عظمى. الإبلاغ يرفع رتبتك فوراً."}
+        ];
+        const container = document.getElementById('lawsContainer');
+        laws.forEach((l, i) => {
+            container.innerHTML += `<div class="law-card"><h4>${i+1}. ${l.t}</h4><p style="font-size:0.9rem; color:#888;">${l.d}</p></div>`;
+        });
+
+        // 3. إدارة النظام (Loading & Ranks)
+        window.onload = () => {
+            setTimeout(() => { document.getElementById('loading').style.opacity = '0'; 
+            setTimeout(()=> document.getElementById('loading').remove(), 1500); }, 2500);
         }
 
-        function updateRank(p) {
-            const label = document.getElementById('rank-name');
-            if(p >= 100) { label.innerText = 'S'; label.style.color = 'gold'; }
-            else if(p >= 75) label.innerText = 'A';
-            else if(p >= 50) label.innerText = 'B';
-            else if(p >= 25) label.innerText = 'C';
+        let currentRank = 10;
+        function openModal(type) {
+            document.getElementById(`modal-${type}`).classList.add('active');
+            if(currentRank < 100) {
+                currentRank += 25;
+                document.getElementById('rank-fill').style.width = currentRank + '%';
+                const rName = document.getElementById('rankName');
+                if(currentRank >= 100) { rName.innerText = 'S'; rName.style.color = '#ec4899'; }
+                else if(currentRank >= 75) rName.innerText = 'A';
+                else if(currentRank >= 50) rName.innerText = 'B';
+            }
         }
+        function closeModal() { document.querySelectorAll('.modal').forEach(m => m.classList.remove('active')); }
     </script>
 </body>
 </html>
