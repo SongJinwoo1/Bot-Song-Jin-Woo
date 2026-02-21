@@ -3,206 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <meta name="google-site-verification" content="Ra-i2hY-UhtavYoB6D2GB9lHAiLy1h6AodvsXqD-tj0" />
-    
-    <title>شروط الخدمة | 𝑩𝑶𝑻 𝑺𝒐𝒏𝒈 𝑱𝒊𝒏 𝑾𝒐𝒐</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <meta name="google-site-verification" content="YOUR_GOOGLE_CODE_HERE" />
+    <title>𝑩𝑶𝑻 𝑺𝒐𝒏𝒈 𝑱𝒊𝒏 𝑾𝒐𝒐 | المقر الرئيسي</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script src="https://cdn.jsdelivr.net/particles.js@2.0.0/particles.min.js"></script>
-    
-    <style>
-        :root {
-            --primary: #6366f1;
-            --secondary: #a855f7;
-            --accent: #ec4899;
-            --dark-bg: #0b0b14;
-            --card-bg: #161625;
-            --sidebar-bg: #11111f;
-            --text-main: #e2e8f0;
-            --text-muted: #94a3b8;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: 'Cairo', sans-serif;
-            background-color: var(--dark-bg);
-            color: var(--text-main);
-            overflow-x: hidden;
-        }
-
-        /* خلفية الجزيئات المتحركة */
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            top: 0;
-            left: 0;
-        }
-
-        .content-wrapper { position: relative; z-index: 2; }
-
-        /* الهيدر والمقدمة */
-        .hero-banner {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
-            padding: 6rem 1rem;
-            text-align: center;
-            border-bottom: 1px solid rgba(99, 102, 241, 0.3);
-        }
-
-        .typewriter-box {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin-top: 1rem;
-            min-height: 1.5em;
-        }
-
-        /* تنظيم الصفحة (Layout) */
-        .container {
-            display: flex;
-            max-width: 1300px;
-            margin: 3rem auto;
-            gap: 2rem;
-            padding: 0 1rem;
-        }
-
-        /* القائمة الجانبية (Sidebar) */
-        .sidebar {
-            width: 300px;
-            background: var(--sidebar-bg);
-            border-radius: 20px;
-            padding: 1.5rem;
-            height: fit-content;
-            position: sticky;
-            top: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .sidebar-link {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--text-muted);
-            text-decoration: none;
-            padding: 1rem;
-            border-radius: 12px;
-            margin-bottom: 8px;
-            transition: 0.3s;
-        }
-
-        .sidebar-link:hover, .sidebar-link.active {
-            background: rgba(99, 102, 241, 0.1);
-            color: var(--primary);
-        }
-
-        /* المحتوى الرئيسي */
-        .main-content { flex: 1; }
-        
-        .card {
-            background: var(--card-bg);
-            border-radius: 24px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-        }
-
-        .section-title {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-        }
-
-        /* التجاوب مع الجوال */
-        @media (max-width: 992px) {
-            .container { flex-direction: column; }
-            .sidebar { width: 100%; position: static; }
-        }
-    </style>
 </head>
 <body>
-
     <div id="particles-js"></div>
 
-    <div class="content-wrapper">
-        <header class="hero-banner">
-            <h1 style="font-size: 3.5rem; letter-spacing: 2px;">استيقظ.. <span style="color: var(--primary);">Arise</span></h1>
-            <div class="typewriter-box" id="typewriter"></div>
-        </header>
+    <header class="hero-banner">
+        <h1>استيقظ.. <span class="glow-text">Arise</span></h1>
+        <div id="typewriter" class="typewriter-text"></div>
+    </header>
 
-        <div class="container">
-            <aside class="sidebar">
-                <h3 style="color: #fff; margin-bottom: 1.5rem; border-right: 4px solid var(--accent); padding-right: 12px;">نظام الظلال</h3>
-                <a href="#rules" class="sidebar-link active"><i class="fas fa-gavel"></i> قوانين الفيلق</a>
-                <a href="#privacy" class="sidebar-link"><i class="fas fa-shield-alt"></i> حماية البيانات</a>
-                <a href="#rank" class="sidebar-link"><i class="fas fa-trophy"></i> نظام الرتب</a>
-                
-                <div style="margin-top: 2rem; padding: 15px; background: rgba(34, 197, 94, 0.05); border-radius: 12px; border: 1px dashed #22c55e;">
-                    <p style="font-size: 0.8rem; color: var(--text-muted);">حالة التحقق:</p>
-                    <p style="color: #22c55e; font-weight: bold;"><i class="fas fa-check-circle"></i> Google Verified</p>
-                </div>
-            </aside>
+    <div class="wrapper">
+        <aside class="sidebar">
+            <div class="rank-badge">RANK: S</div>
+            <nav>
+                <a href="#home" class="active"><i class="fas fa-home"></i> الرئيسية</a>
+                <a href="#ideas"><i class="fas fa-lightbulb"></i> قائمة الـ 100 فكرة</a>
+                <a href="#terms"><i class="fas fa-file-contract"></i> شروط الخدمة</a>
+                <a href="#privacy"><i class="fas fa-user-shield"></i> الخصوصية</a>
+            </nav>
+        </aside>
 
-            <main class="main-content">
-                <section id="rules" class="card">
-                    <h2 class="section-title"><i class="fas fa-scroll"></i> شروط الاستخدام</h2>
-                    <p style="line-height: 2; color: var(--text-muted); font-size: 1.1rem;">
-                        باستخدامك لبوت **Song Jin Woo**، فإنك تدخل في عهد مع ملك الظلال. يجب عليك الالتزام بقواعد الاحترام وعدم محاولة تخريب النظام أو استغلال الثغرات. أي انتهاك سيؤدي إلى حظر نهائي من الفيلق.
-                    </p>
-                </section>
+        <main class="main-content">
+            <section id="ideas" class="content-card">
+                <h2><i class="fas fa-brain"></i> الأفكار المبرمجة</h2>
+                <div id="ideas-container">
+                    </div>
+            </section>
 
-                <section id="rank" class="card">
-                    <h2 class="section-title"><i class="fas fa-star"></i> نظام الرتب (Hunter Rank)</h2>
-                    <p style="color: var(--text-muted); line-height: 1.8;">
-                        نظامنا يعتمد على التفاعل والمهمات. تبدأ كرتبة **E** وتتصاعد قوتك حتى تصل إلى رتبة **S** ولقب **ملك الظلال**. كل رتبة تفتح لك ميزات سرية داخل البوت.
-                    </p>
-                </section>
-            </main>
-        </div>
+            <section id="terms" class="content-card">
+                <h2><i class="fas fa-shield-alt"></i> شروط الاستخدام</h2>
+                <p>باستخدامك للبوت، أنت توافق على قوانين جيش الظلال الصارمة.</p>
+            </section>
+        </main>
     </div>
 
-    <script>
-        // إعداد الجزيئات باللون الأزرق والبنفسجي
-        particlesJS("particles-js", {
-            particles: {
-                number: { value: 70 },
-                color: { value: ["#6366f1", "#a855f7"] },
-                shape: { type: "circle" },
-                opacity: { value: 0.5 },
-                size: { value: 3 },
-                line_linked: { 
-                    enable: true, 
-                    distance: 150, 
-                    color: "#6366f1", 
-                    opacity: 0.2, 
-                    width: 1 
-                },
-                move: { enable: true, speed: 2.5 }
-            },
-            interactivity: {
-                events: { onhover: { enable: true, mode: "repulse" } }
-            }
-        });
-
-        // تأثير الآلة الكاتبة (Typewriter)
-        const text = "نظام سونغ جين وو لإدارة الظلال والخدمات..";
-        let i = 0;
-        function typeWriter() {
-            if (i < text.length) {
-                document.getElementById("typewriter").innerHTML += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 100);
-            }
-        }
-        window.onload = typeWriter;
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
