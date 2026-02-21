@@ -1,1 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام أرتقاء الظلال | SJW SYSTEM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="bgCanvas"></canvas>
 
+    <div class="hub">
+        <img src="https://github.com/SongJinwoo1/Bot-Song-Jin-Woo/blob/main/photo_5821173209150196869_y%20(1).jpg?raw=true" class="main-logo">
+        <h1 class="system-title">𝑺𝑱𝑾 𝑺𝒀𝑺𝑻𝑬𝑴 v2.0</h1>
+        
+        <div class="actions">
+            <button class="btn-summon" onclick="openModal('commands', 'photo_5823313378468892172_y.jpg')">بوابة الأوامر</button>
+            <button class="btn-summon" onclick="openModal('rank', 'photo_5823313378468892171_y.jpg')">سجل التصنيفات</button>
+            <button class="btn-summon" onclick="openModal('shop', 'photo_5823313378468892170_y.jpg')">متجر المانا</button>
+            <button class="btn-summon" onclick="openModal('system', 'photo_5823313378468892173_y.jpg')">نظام السيستم</button>
+            <button class="btn-summon" onclick="openModal('guilds')">اتحاد النقابات</button>
+            <button class="btn-summon" onclick="openModal('king')">الديوان الملكي</button>
+        </div>
+    </div>
+
+    <div class="modal" id="systemModal">
+        <div class="modal-body">
+            <img id="modalImage" src="" class="section-img" style="display:none">
+            <h2 id="modalTitle" style="color:var(--primary); margin-bottom:15px;"></h2>
+            <div id="modalContent"></div>
+            <button class="btn-summon close-btn" onclick="closeModal()">إغلاق</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
