@@ -8,15 +8,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #00f2ff;
-            --secondary: #7000ff;
-            --bg: #020205;
-            --card: rgba(15, 15, 25, 0.98);
+            --primary: #00f2ff; 
+            --secondary: #7000ff; 
+            --bg: #010103;
+            --card: rgba(10, 10, 18, 0.98);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Cairo', sans-serif; background: var(--bg); color: white; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; touch-action: none; }
 
+        /* الخلفية المتحركة (مانا متساقطة) */
         canvas#bgCanvas { position: fixed; inset: 0; z-index: 0; }
 
         /* سيف المانا للكمبيوتر */
@@ -27,32 +28,28 @@
             filter: drop-shadow(0 0 12px var(--primary)); transform: rotate(45deg); display: none;
         }
 
-        .slash { position: fixed; width: 80px; height: 3px; background: var(--primary); z-index: 9999; pointer-events: none; transform: rotate(-45deg); box-shadow: 0 0 20px var(--primary); animation: slashAnim 0.3s ease-out forwards; }
+        /* ضربة السيف للهاتف */
+        .slash { position: fixed; width: 100px; height: 2px; background: var(--primary); z-index: 9999; pointer-events: none; transform: rotate(-45deg); box-shadow: 0 0 20px var(--primary); animation: slashAnim 0.3s forwards; }
         @keyframes slashAnim { 0% { transform: scaleX(0) rotate(-45deg); opacity: 1; } 100% { transform: scaleX(2) rotate(-45deg); opacity: 0; } }
 
-        .hub { position: relative; z-index: 10; text-align: center; width: 90%; }
-        .main-logo { width: 180px; height: 180px; border-radius: 50%; border: 3px solid var(--primary); box-shadow: 0 0 40px var(--primary); transition: 0.5s; }
-        .main-logo:hover { transform: scale(1.05) rotate(5deg); }
+        .hub { position: relative; z-index: 10; text-align: center; width: 95%; max-width: 450px; }
+        .main-logo { width: 150px; height: 150px; border-radius: 50%; border: 3px solid var(--primary); box-shadow: 0 0 30px var(--primary); margin-bottom: 15px; }
 
-        .btn-summon { background: var(--card); border: 1px solid var(--primary); padding: 12px 20px; border-radius: 10px; color: white; font-weight: 700; margin: 8px; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; width: 140px; justify-content: center; box-shadow: inset 0 0 10px rgba(0,242,255,0.1); }
-        .btn-summon:active { transform: scale(0.95); }
-
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.98); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
-        .modal.active { display: flex; animation: emerge 0.4s ease-out; }
-        @keyframes emerge { from { opacity: 0; filter: blur(10px); } to { opacity: 1; filter: blur(0); } }
-
-        .modal-body { background: var(--card); width: 100%; max-width: 450px; padding: 25px; border-radius: 20px; border: 2px solid var(--primary); text-align: center; position: relative; overflow-y: auto; max-height: 90vh; }
+        .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px; }
+        .btn-summon { background: var(--card); border: 1px solid var(--primary); padding: 12px; border-radius: 10px; color: white; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; justify-content: center; font-size: 0.9rem; transition: 0.3s; }
+        .btn-full { grid-column: span 2; background: linear-gradient(45deg, #0a0a20, #1a0033) !important; border-color: var(--secondary) !important; animation: kingGlow 2s infinite alternate; }
         
-        .guild-header { color: var(--primary); font-size: 1.2rem; font-weight: 900; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px; }
-        .feature-item { text-align: right; background: rgba(255,255,255,0.03); padding: 10px; margin: 5px 0; border-radius: 8px; font-size: 0.85rem; border-right: 3px solid var(--primary); }
+        @keyframes kingGlow { from { box-shadow: 0 0 10px var(--secondary); } to { box-shadow: 0 0 20px var(--secondary); } }
 
-        .king-image { width: 100%; height: 200px; object-fit: cover; border-radius: 15px; margin-bottom: 15px; border: 2px solid var(--primary); }
-
-        /* حقوق الملك */
-        .system-footer { position: fixed; bottom: 15px; width: 100%; text-align: center; font-size: 0.7rem; color: #444; letter-spacing: 2px; }
-
-        #notif { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: var(--primary); color: #000; padding: 10px 25px; border-radius: 30px; transition: 0.5s; z-index: 10000; font-weight: 900; }
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.98); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; backdrop-filter: blur(10px); }
+        .modal.active { display: flex; animation: fadeIn 0.3s; }
+        .modal-body { background: var(--card); width: 100%; max-width: 450px; padding: 25px; border-radius: 20px; border: 2px solid var(--primary); text-align: center; max-height: 85vh; overflow-y: auto; }
         
+        .feature { text-align: right; background: rgba(255,255,255,0.03); padding: 10px; margin: 6px 0; border-radius: 8px; font-size: 0.85rem; border-right: 3px solid var(--primary); }
+        .king-image { width: 100%; height: 180px; object-fit: cover; border-radius: 15px; margin-bottom: 15px; border: 2px solid var(--primary); }
+
+        .footer { position: fixed; bottom: 10px; width: 100%; text-align: center; font-size: 0.65rem; color: #444; letter-spacing: 2px; }
+
         @media (min-width: 1024px) { #cursor-dagger { display: block; } * { cursor: none; } }
     </style>
 </head>
@@ -60,116 +57,128 @@
 
     <canvas id="bgCanvas"></canvas>
     <div id="cursor-dagger"></div>
-    <div id="notif"></div>
 
     <main class="hub">
         <img src="https://github.com/SongJinwoo1/Bot-Song-Jin-Woo/blob/main/photo_5821173209150196869_y%20(1).jpg?raw=true" class="main-logo">
-        <h2 style="margin: 20px 0; font-size: 1.3rem; letter-spacing: 2px;">SONG JIN WOO SYSTEM</h2>
+        <h2 style="margin-bottom: 20px; font-size: 1.2rem; letter-spacing: 2px;">𝑺𝑱𝑾 𝑺𝒀𝑺𝑻𝑬𝑴</h2>
         
         <div class="actions">
-            <button class="btn-summon" onclick="showModal('laws')">القوانين</button>
-            <button class="btn-summon" onclick="showModal('guilds')">النقابة</button>
-            <button class="btn-summon" onclick="showModal('king')" style="width: 85%; background: linear-gradient(45deg, #0a0a1a, #1a0033); border-color: var(--secondary);">بوابة ملك الظلال</button>
+            <button class="btn-summon" onclick="showModal('laws')"><i class="fas fa-scroll"></i> القوانين</button>
+            <button class="btn-summon" onclick="showModal('guilds')"><i class="fas fa-shield-halved"></i> النقابة</button>
+            <button class="btn-summon" onclick="showModal('groups')"><i class="fas fa-users"></i> الجروبات</button>
+            <button class="btn-summon" onclick="showModal('system')"><i class="fas fa-microchip"></i> النظام</button>
+            <button class="btn-summon btn-full" onclick="showModal('king')"><i class="fas fa-crown"></i> تواصل مع الملك</button>
         </div>
     </main>
-
-    <div class="modal" id="modal-guilds">
-        <div class="modal-body">
-            <div class="guild-header">⏣ نـقـابـة اكـلـيـبـس • 南‌‏東</div>
-            <p style="font-size: 0.7rem; color: var(--primary); margin-bottom: 15px;">فرع جديد | إقليم فالكيري</p>
-            
-            <div class="feature-item">✭ تفاعل أسطوري (مملكة عريقة منذ 2022)</div>
-            <div class="feature-item">✭ مشرفين محترمين ونظام صارم</div>
-            <div class="feature-item">✭ فعاليات مستمرة وجوائز مادية ورقمية</div>
-            <div class="feature-item">✭ تابعة لإقليم فالكيري العظيم</div>
-
-            <a href="https://chat.whatsapp.com/J3ebo43vwzjBlMfViL5EJ5" class="btn-summon" style="width:100%; margin-top: 20px; background: #25d366; color: black; border: none;">
-                <i class="fab fa-whatsapp"></i> انضمام للنقابة
-            </a>
-            <button class="btn-summon" style="width:100%" onclick="closeModal()">إغلاق</button>
-        </div>
-    </div>
-
-    <div class="modal" id="modal-king">
-        <div class="modal-body">
-            <img src="photo_5823313378468892156_y.jpg" class="king-image">
-            <h3 style="color:var(--primary); margin-bottom:10px;">𝑯𝑬𝑰𝑹 𝑶𝑭 𝑺𝑯𝑨𝑫𝑶𝑾𝑺</h3>
-            <p style="font-size: 0.8rem; margin-bottom: 20px; color: #888;">أنت الآن أمام حضرة ملك الظلال - سونغ جين وو</p>
-            
-            <a href="https://wa.me/رقمك" class="btn-summon" style="width:100%"><i class="fab fa-whatsapp"></i> الديوان الملكي</a>
-            <button class="btn-summon" style="width:100%" onclick="closeModal()">انسحاب</button>
-        </div>
-    </div>
 
     <div class="modal" id="modal-laws">
         <div class="modal-body">
             <h2 style="color:var(--primary); margin-bottom: 15px;">📜 دستور الظلال</h2>
             <div style="text-align: right; font-size: 0.85rem; line-height: 1.7;">
                 1. الولاء المطلق للمطور هو القانون الأول.<br>
-                2. يمنع منعاً باتاً انتحال شخصية الملك.<br>
-                3. اختيار النقابة أبدي (إكليبس هي المقر).<br>
-                4. رقم الهاتف المسجل هو هويتك الوحيدة.<br>
-                5. أي محاولة لاختراق النظام تؤدي للحظر الفوري.<br>
-                6. الاحترام المتبادل داخل النقابة واجب.<br>
-                7. يمنع استخدام البوت في أغراض تخريبية.<br>
-                8. حقوق البرمجة والتصميم تعود للملك فقط.<br>
-                9. كلمة الملك هي القرار النهائي دائماً.
+                2. يمنع انتحال شخصية الملك أو نائبه.<br>
+                3. نقابة إكليبس هي المقر الرسمي الوحيد.<br>
+                4. رقم هاتفك هو هويتك (الولاء لمرة واحدة).<br>
+                5. أي محاولة اختراق تعني الحظر النهائي.<br>
+                6. الاحترام واجب بين جميع أعضاء الفيلق.<br>
+                7. يمنع استخدام البوت لأي غرض تخريبي.<br>
+                8. حقوق البرمجة والتصميم محفوظة للملك.<br>
+                9. كلمة الملك هي الفصل في جميع الأمور.
             </div>
-            <button class="btn-summon" style="width:100%; margin-top:15px;" onclick="closeModal()">أقسمت بالولاء</button>
+            <button class="btn-summon" style="width:100%; margin-top:15px;" onclick="closeModal()">تم القبول</button>
         </div>
     </div>
 
-    <div class="system-footer">PROPERTY OF S.J.W SYSTEM © 2026</div>
+    <div class="modal" id="modal-guilds">
+        <div class="modal-body">
+            <div style="color:var(--primary); font-weight: 900; margin-bottom: 10px;">⏣ نـقـابـة اكـلـيـبـس • 南‌‏東</div>
+            <div class="feature">✭ تفاعل أسطوري (مملكة عريقة منذ 2022)</div>
+            <div class="feature">✭ مشرفين محترمين ونظام حماية صارم</div>
+            <div class="feature">✭ فعاليات متجددة وجوائز مادية دورية</div>
+            <a href="https://chat.whatsapp.com/J3ebo43vwzjBlMfViL5EJ5" class="btn-summon" style="width:100%; margin-top: 15px; background: #25d366; color: black; border: none;">دخول المقر</a>
+            <button class="btn-summon" style="width:100%; margin-top:10px;" onclick="closeModal()">رجوع</button>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-groups">
+        <div class="modal-body">
+            <h2 style="color:var(--primary); margin-bottom: 15px;">🌐 فروع المملكة</h2>
+            <a href="#" class="feature" style="display:block; text-decoration:none; color:white;">🔗 جروب البوت الرسمي (قريباً)</a>
+            <a href="#" class="feature" style="display:block; text-decoration:none; color:white;">🔗 قسم دعم الصيادين</a>
+            <button class="btn-summon" style="width:100%; margin-top: 15px;" onclick="closeModal()">إغلاق</button>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-system">
+        <div class="modal-body">
+            <h2 style="color:var(--primary); margin-bottom: 15px;">⚙️ حالة النظام</h2>
+            <div class="feature" style="text-align:center; font-size: 1.2rem; color: var(--primary);">VERSION: 2.0.4 - STABLE</div>
+            <div class="feature">✭ حالة الخادم: متصل (Online)</div>
+            <div class="feature">✭ مستوى الصلاحية: ملك الظلال</div>
+            <p style="font-size: 0.7rem; margin-top: 10px; color: #666;">تم تحديث النواة لتعمل بأقصى طاقة مانا</p>
+            <button class="btn-summon" style="width:100%; margin-top: 15px;" onclick="closeModal()">إغلاق</button>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-king">
+        <div class="modal-body">
+            <img src="photo_5823313378468892156_y.jpg" class="king-image">
+            <h3 style="color:var(--primary);">𝑫𝑬𝑺𝑻𝑰𝑵𝒀 𝑶𝑭 𝑲𝑰𝑵𝑮𝑺</h3>
+            <p style="font-size: 0.8rem; margin: 15px 0; color: #888;">التواصل المباشر مع حاكم النظام</p>
+            <a href="https://wa.me/96597805334" class="btn-summon" style="width:100%; background: var(--secondary) !important;">الديوان الملكي (واتساب)</a>
+            <button class="btn-summon" style="width:100%; margin-top:10px;" onclick="closeModal()">انسحاب</button>
+        </div>
+    </div>
+
+    <div class="footer">SHADOW MONARCH SYSTEM | LEVEL 2 COMPLETE</div>
 
     <script>
         const canvas = document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
-        let dots = [];
+        let particles = [];
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        for(let i=0; i<40; i++) { dots.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx: (Math.random()-0.5)*0.2, vy: (Math.random()-0.5)*0.2 }); }
 
-        function draw() {
-            ctx.clearRect(0,0,canvas.width, canvas.height);
-            ctx.fillStyle = "rgba(0, 242, 255, 0.2)";
-            dots.forEach(d => {
-                d.x += d.vx; d.y += d.vy;
-                if(d.x<0 || d.x>canvas.width) d.vx*=-1;
-                if(d.y<0 || d.y>canvas.height) d.vy*=-1;
-                ctx.beginPath(); ctx.arc(d.x, d.y, 1, 0, Math.PI*2); ctx.fill();
-            });
-            requestAnimationFrame(draw);
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.1;
+                this.speedY = Math.random() * 1 + 0.2;
+                this.opacity = Math.random() * 0.5;
+            }
+            update() {
+                this.y += this.speedY;
+                if (this.y > canvas.height) this.y = 0;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(0, 242, 255, ${this.opacity})`;
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+            }
         }
-        draw();
 
-        // نظام السيف المطور
+        for (let i = 0; i < 100; i++) particles.push(new Particle());
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // نظام السيف واللمس
         const dagger = document.getElementById('cursor-dagger');
         document.addEventListener('mousemove', (e) => {
-            dagger.style.left = e.clientX + 'px';
-            dagger.style.top = e.clientY + 'px';
-            const x = (window.innerWidth/2 - e.clientX)/30;
-            const y = (window.innerHeight/2 - e.clientY)/30;
-            document.querySelector('.main-logo').style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+            dagger.style.left = e.clientX + 'px'; dagger.style.top = e.clientY + 'px';
         });
 
         document.addEventListener('touchstart', (e) => {
             const touch = e.touches[0];
-            createSlash(touch.clientX, touch.clientY);
-        });
-
-        function createSlash(x, y) {
             const div = document.createElement('div');
             div.className = 'slash';
-            div.style.left = x - 40 + 'px';
-            div.style.top = y + 'px';
+            div.style.left = touch.clientX - 50 + 'px'; div.style.top = touch.clientY + 'px';
             document.body.appendChild(div);
             setTimeout(() => div.remove(), 300);
-        }
-
-        function alertNotif(t) {
-            const n = document.getElementById('notif');
-            n.innerText = t; n.style.transform = 'translateX(-50%) translateY(0)';
-            setTimeout(() => n.style.transform = 'translateX(-50%) translateY(-100px)', 3000);
-        }
+        });
 
         function showModal(id) { document.getElementById('modal-'+id).classList.add('active'); }
         function closeModal() { document.querySelectorAll('.modal').forEach(m => m.classList.remove('active')); }
