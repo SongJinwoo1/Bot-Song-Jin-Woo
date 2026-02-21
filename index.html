@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𝐁𝐎𝐓 𝐒𝐨𝐧𝐠 𝐉𝐢𝐧 𝐖𝐨𝐨 | 𝕊𝕪𝕤𝕥𝕖𝕞</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --shadow-purple: #7c3aed;
+            --main-glow: #a855f7;
+            --dark-bg: #05011a;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --sidebar-width: 280px;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            margin: 0; background: var(--dark-bg); color: white;
+            font-family: 'Cairo', sans-serif; overflow: hidden; display: flex;
+        }
+
+        canvas { position: fixed; top: 0; left: 0; z-index: -1; }
+
+        /* Sidebar - اللوحة الجانبية */
+        .sidebar {
+            width: var(--sidebar-width); height: 100vh; background: rgba(10, 10, 30, 0.98);
+            border-left: 1px solid rgba(124, 58, 237, 0.3); display: flex; flex-direction: column;
+            padding: 20px; transition: 0.4s; z-index: 1000;
+        }
+
+        .nav-item {
+            padding: 15px; margin-bottom: 8px; border-radius: 12px; cursor: pointer;
+            transition: 0.3s; display: flex; align-items: center; gap: 12px;
+            background: rgba(255,255,255,0.02); border: 1px solid transparent; font-size: 14px;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(124, 58, 237, 0.15); border-color: var(--shadow-purple);
+            color: var(--main-glow); transform: translateX(-5px);
+        }
+
+        /* Content Area */
+        .main-content {
+            flex: 1; padding: 40px; overflow-y: auto; scroll-behavior: smooth;
+        }
+
+        .page { display: none; width: 100%; max-width: 900px; margin: 0 auto; animation: slideUp 0.5s ease; }
+        .page.active { display: block; }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Dashboard Cards */
+        .card {
+            background: var(--glass-bg); border: 1px solid rgba(124, 58, 237, 0.2);
+            padding: 25px; border-radius: 20px; margin-bottom: 20px; backdrop-filter: blur(10px);
+        }
+
+        .card h2 { color: var(--main-glow); margin-top: 0; display: flex; align-items: center; gap: 10px; }
+
+        /* Responsive UI */
+        .menu-btn {
+            display: none; position: fixed; top: 20px; right: 20px;
+            z-index: 1100; background: var(--shadow-purple); color: white;
+            border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer;
+        }
+
+        @media (max-width: 992px) {
+            .sidebar { position: fixed; right: -100%; }
+            .sidebar.open { right: 0; }
+            .menu-btn { display: block; }
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block; padding: 12px 25px; border-radius: 10px;
+            text-decoration: none; font-weight: bold; transition: 0.3s;
+            cursor: pointer; text-align: center; border: none;
+        }
+        .btn-primary { background: var(--shadow-purple); color: white; }
+        .btn-primary:hover { box-shadow: 0 0 20px var(--shadow-purple); }
+
+        /* Tables for Commands/Laws */
+        .data-table {
+            width: 100%; border-collapse: collapse; margin-top: 15px;
+        }
+        .data-table th { background: rgba(124, 58, 237, 0.2); padding: 12px; text-align: right; color: var(--main-glow); }
+        .data-table td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
+
+    </style>
+</head>
+<body>
+
+    <button class="menu-btn" onclick="toggleSidebar()">☰ القائمة</button>
+    <canvas id="particles"></canvas>
+
+    <aside class="sidebar" id="sidebar">
+        <div style="text-align: center; margin-bottom: 30px;">
+            <img src="photo_5821173209150196869_y.jpg" style="width: 80px; border-radius: 20px; border: 2px solid var(--shadow-purple);">
+            <h3 style="margin-top: 10px; font-size: 16px;">𝐁𝐎𝐓 𝐒𝐨𝐧𝐠 𝐉𝐢𝐧 𝐖𝐨𝐨</h3>
+        </div>
+        <nav>
+            <div class="nav-item active" onclick="switchPage('home')">🏠 الرئيسية</div>
+            <div class="nav-item" onclick="switchPage('how-to')">📖 دليل البدء السريع</div>
+            <div class="nav-item" onclick="switchPage('commands')">📜 قائمة الأوامر</div>
+            <div class="nav-item" onclick="switchPage('laws')">⚖️ القوانين والخصوصية</div>
+            <div class="nav-item" onclick="switchPage('dev')">👤 سيد الظلال (المطور)</div>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div id="home" class="page active">
+            <h1>مرحباً بك في نظام السيادة 🌑</h1>
+            <div class="card">
+                <h2>⚡ حالة النظام</h2>
+                <p>البوت يعمل حالياً بكفاءة <b>S-Rank</b>. تم تحديث خوارزميات الاستجابة لتعمل بسرعة أقل من 0.3 ثانية.</p>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <a href="https://chat.whatsapp.com/JILd7b6sW0JFk4bYPVzRrw" class="btn btn-primary">دخول ساحة الاختبار</a>
+                    <a href="https://whatsapp.com/channel/0029VbCMlkj2ER6nzLnwpO3G" class="btn" style="background: #1e293b; color: white;">قناة الأخبار</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="how-to" class="page">
+            <h2>📖 دليل البدء السريع</h2>
+            <div class="card">
+                <p>1️⃣ <b>أضف البوت:</b> قم بإضافة رقم البوت إلى مجموعتك.</p>
+                <p>2️⃣ <b>الترقية:</b> قم برفع البوت كمشرف (Admin) لتفعيل ميزات الحماية.</p>
+                <p>3️⃣ <b>التفعيل:</b> أرسل <code>.الاوامر</code> لرؤية ما يمكن للنظام فعله.</p>
+            </div>
+        </div>
+
+        <div id="commands" class="page">
+            <h2>📜 بروتوكولات الأوامر</h2>
+            <div class="card">
+                <table class="data-table">
+                    <thead><tr><th>الأمر</th><th>الوصف</th></tr></thead>
+                    <tbody>
+                        <tr><td>.ذكاء</td><td>فتح بوابة الحوار مع AI سونغ</td></tr>
+                        <tr><td>.طرد</td><td>نفي العضو المخالف من الفيلق</td></tr>
+                        <tr><td>.صورة</td><td>تجسيد خيالك عبر الذكاء الاصطناعي</td></tr>
+                        <tr><td>.حماية</td><td>تفعيل درع الحماية من الروابط</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="laws" class="page">
+            <h2>⚖️ قوانين استخدام النظام</h2>
+            <div class="card">
+                <h3>🛡️ سياسة الاستخدام</h3>
+                <p>يُمنع استخدام البوت في إرسال محتوى مسيء أو محاولة تخريب سيرفرات النظام. المخالفة تعني "النفي" (الحظر) الدائم.</p>
+                <h3>🔒 الخصوصية</h3>
+                <p>نحن لا نقوم بتخزين محادثاتك الشخصية. يتم معالجة البيانات لحظياً لتنفيذ الأوامر فقط.</p>
+            </div>
+        </div>
+
+        <div id="dev" class="page">
+            <h2>👤 سيد الظلال (المطور)</h2>
+            <div class="card" style="text-align: center;">
+                <img src="photo_5821173209150196869_y.jpg" style="width: 120px; border-radius: 50%; border: 3px solid var(--main-glow);">
+                <h3>𝑺𝒐𝒏𝒈 𝑱𝒊𝒏 𝑾𝒐𝒐</h3>
+                <p>المطور الوحيد والمسؤول عن استقرار النظام.</p>
+                <a href="https://wa.me/96597805334" class="btn btn-primary" style="background: #25d366;">تواصل واتساب (الكويت)</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // تبديل الصفحات
+        function switchPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            event.currentTarget.classList.add('active');
+            if (window.innerWidth <= 992) toggleSidebar();
+        }
+
+        // لوحة الموبايل
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        // تأثير الجزيئات
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let particles = [];
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.vX = Math.random() * 0.5 - 0.25;
+                this.vY = Math.random() * 0.5 - 0.25;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(168, 85, 247, 0.5)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            update() {
+                this.x += this.vX; this.y += this.vY;
+                if (this.x > canvas.width || this.x < 0) this.vX *= -1;
+                if (this.y > canvas.height || this.y < 0) this.vY *= -1;
+            }
+        }
+        function init() { for (let i = 0; i < 100; i++) particles.push(new Particle()); }
+        function anim() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(anim);
+        }
+        init(); anim();
+    </script>
+</body>
+</html>
