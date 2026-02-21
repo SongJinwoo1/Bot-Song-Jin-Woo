@@ -1,1 +1,37 @@
+:root {
+    --primary: #00f2ff; /* أزرق مانا */
+    --secondary: #7000ff; /* بنفسجي ملكي */
+    --bg: #010103;
+    --card: rgba(10, 10, 20, 0.9);
+}
 
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+body { background: var(--bg); color: white; overflow-x: hidden; }
+
+canvas#bgCanvas { position: fixed; inset: 0; z-index: -1; }
+
+.hub { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10; position: relative; }
+
+.main-logo { width: 160px; height: 160px; border-radius: 50%; border: 3px solid var(--primary); box-shadow: 0 0 20px var(--primary); margin-bottom: 10px; transition: 0.5s; }
+
+/* تأثير الهالة البنفسجية عند الوقوف على الزر */
+.btn-summon {
+    width: 200px; padding: 15px; margin: 10px;
+    background: var(--card); border: 1px solid var(--primary);
+    border-radius: 12px; color: white; cursor: pointer;
+    transition: all 0.4s ease; font-weight: bold;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+
+.btn-summon:hover {
+    transform: scale(1.05);
+    border-color: var(--secondary);
+    box-shadow: 0 0 25px 5px rgba(112, 0, 255, 0.5); /* الدخان البنفسجي */
+    color: var(--primary);
+}
+
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 100; backdrop-filter: blur(10px); }
+.modal.active { display: flex; }
+.modal-body { background: var(--card); width: 90%; max-width: 500px; padding: 20px; border-radius: 20px; border: 1px solid var(--primary); max-height: 80vh; overflow-y: auto; }
+
+.idea-item { text-align: right; background: rgba(255,255,255,0.05); padding: 10px; margin: 5px 0; border-radius: 8px; border-right: 4px solid var(--primary); font-size: 0.9rem; }
