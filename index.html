@@ -3,42 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔱 BOT Song Jin Woo | System</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <title>سونغ جين وو - Song Jin Woo | محترف التطوير</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/particles.js@2.0.0/particles.min.js"></script>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #d4af37;
+            --accent-purple: #9d4edd;
+            --accent-red: #c1121f;
+            --text-light: #e0e0e0;
+            --text-dark: #0a0a0a;
+            --border-color: #2a2a4e;
+        }
+
         body {
-            font-family: 'Cairo', sans-serif;
-            background: #05011a;
-            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--text-light);
+            line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* خلفية متحركة احترافية */
         #particles-js {
             position: fixed;
             width: 100%;
             height: 100%;
-            top: 0;
-            left: 0;
             z-index: -1;
-            background: radial-gradient(circle at center, #1a0b3c 0%, #05011a 100%);
         }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* الهيدر */
+        header {
+            padding: 20px 0;
+            background: rgba(26, 26, 46, 0.8);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(124, 58, 237, 0.2);
-            border-radius: 24px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .glow-text {
-            text-shadow: 0 0 15px rgba(168, 85, 247, 0.6);
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        /* تحسينات التصميم المتجاوب */
-        @media (max-width: 640px) {
-            .hero-title { font-size: 2.5rem !important; }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-light);
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-purple);
+        }
+
+        /* قسم الهيرو */
+        .hero {
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            flex-direction: column;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #9d4edd, #5a189a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: slideUp 1s ease-out;
+        }
+
+        /* نظام النشر */
+        .post-section {
+            padding: 50px 0;
+        }
+
+        .post-input-container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: white;
+            resize: none;
+            margin-bottom: 10px;
+        }
+
+        .btn-post {
+            background: var(--accent-purple);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-post:hover {
+            background: #7b2cbf;
+        }
+
+        .post-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* ميديا كويري */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
@@ -46,74 +173,69 @@
 
     <div id="particles-js"></div>
 
-    <div class="relative z-10">
-        <nav class="p-6">
-            <div class="container mx-auto flex justify-between items-center glass-card px-8 py-4">
-                <div class="flex items-center gap-4">
-                    <img src="photo_5821173209150196869_y.jpg" alt="Logo" class="w-12 h-12 rounded-xl border-2 border-purple-500 shadow-lg shadow-purple-500/20">
-                    <span class="text-xl font-bold glow-text tracking-widest">SONG JIN WOO</span>
-                </div>
-                <div class="hidden md:flex gap-8 font-bold">
-                    <a href="#features" class="hover:text-purple-400 transition">المميزات</a>
-                    <a href="#rules" class="hover:text-purple-400 transition">القوانين</a>
-                    <a href="#contact" class="hover:text-purple-400 transition">الدعم</a>
-                </div>
-            </div>
-        </nav>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">SONG JIN WOO</div>
+                <ul class="nav-links">
+                    <li><a href="#hero">الرئيسية</a></li>
+                    <li><a href="#posts">المنشورات</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-        <section class="container mx-auto px-6 py-20 text-center">
-            <div class="mb-10 inline-block p-2 glass-card rounded-3xl">
-                <img src="photo_5821173209150196869_y.jpg" alt="Hero" class="w-48 h-48 md:w-64 md:h-64 rounded-2xl object-cover shadow-2xl shadow-purple-900/40 border-b-4 border-purple-600">
-            </div>
-            <h1 class="hero-title text-5xl md:text-7xl font-black mb-6 glow-text italic">SYSTEM ACTIVE</h1>
-            <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-                مرحباً بك في المستوى التالي من إدارة المجموعات. نظام استدعاء آلي مدعوم بالذكاء الاصطناعي، الأسرع والأكثر أماناً في فيلق الظلال.
-            </p>
-            <div class="flex flex-wrap justify-center gap-6">
-                <a href="https://chat.whatsapp.com/JILd7b6sW0JFk4bYPVzRrw" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-10 rounded-2xl transition-all hover:scale-105 shadow-xl shadow-purple-600/20">
-                    استدعاء البوت الآن ⚡
-                </a>
-            </div>
+    <div class="container">
+        <section class="hero" id="hero">
+            <h1>أهلاً بك في نظام السيادة</h1>
+            <p>المطور الرسمي لبوت سونغ جين وو</p>
         </section>
 
-        <section id="features" class="container mx-auto px-6 py-20">
-            <h2 class="text-3xl font-bold mb-12 text-center glow-text">🛡️ بروتوكولات النظام</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="glass-card p-8 hover:bg-purple-900/10 transition group">
-                    <div class="text-4xl mb-4 group-hover:scale-110 transition">⚡</div>
-                    <h3 class="text-xl font-bold mb-2">سرعة S-Rank</h3>
-                    <p class="text-gray-400">تنفيذ الأوامر في أجزاء من الثانية بفضل المعالجة السحابية المتطورة.</p>
-                </div>
-                <div class="glass-card p-8 hover:bg-purple-900/10 transition group">
-                    <div class="text-4xl mb-4 group-hover:scale-110 transition">🦾</div>
-                    <h3 class="text-xl font-bold mb-2">حماية تلقائية</h3>
-                    <p class="text-gray-400">درع حماية يمنع الروابط المزعجة ويطرد المتطفلين فوراً.</p>
-                </div>
-                <div class="glass-card p-8 hover:bg-purple-900/10 transition group">
-                    <div class="text-4xl mb-4 group-hover:scale-110 transition">🧠</div>
-                    <h3 class="text-xl font-bold mb-2">ذكاء متطور</h3>
-                    <p class="text-gray-400">أدوات تفاعلية تساعدك في تحليل المحتوى وتوليد الصور بالذكاء الاصطناعي.</p>
-                </div>
+        <section class="post-section" id="posts">
+            <div class="post-input-container">
+                <textarea id="postContent" rows="3" placeholder="اكتب تحديثاً جديداً للنظام..."></textarea>
+                <button class="btn-post" onclick="addPost()">نشر التحديث</button>
             </div>
+
+            <div id="postsList">
+                </div>
         </section>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        particlesJS("particles-js", {
-            "particles": {
-                "number": { "value": 80 },
-                "color": { "value": "#a855f7" },
-                "shape": { "type": "circle" },
-                "opacity": { "value": 0.5, "random": true },
-                "size": { "value": 3, "random": true },
-                "line_linked": { "enable": true, "distance": 150, "color": "#7c3aed", "opacity": 0.2, "width": 1 },
-                "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
+        // إعداد الجزيئات
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#9d4edd" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5 },
+                size: { value: 3 },
+                line_linked: { enable: true, distance: 150, color: "#9d4edd", opacity: 0.4, width: 1 },
+                move: { enable: true, speed: 6 }
             },
-            "interactivity": {
-                "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" } }
+            interactivity: {
+                detect_on: "canvas",
+                events: { onhover: { enable: true, mode: "repulse" } }
             }
         });
+
+        // وظيفة إضافة منشور
+        function addPost() {
+            const content = document.getElementById('postContent').value;
+            if (content.trim() !== '') {
+                const postsList = document.getElementById('postsList');
+                const newPost = document.createElement('div');
+                newPost.className = 'post-card';
+                newPost.innerHTML = `
+                    <div style="color: #9d4edd; font-weight: bold; margin-bottom: 10px;">تحديث جديد:</div>
+                    <p>${content}</p>
+                    <div style="font-size: 12px; color: #666; margin-top: 10px;">${new Date().toLocaleString('ar-SA')}</div>
+                `;
+                postsList.insertBefore(newPost, postsList.firstChild);
+                document.getElementById('postContent').value = '';
+            }
+        }
     </script>
 </body>
 </html>
