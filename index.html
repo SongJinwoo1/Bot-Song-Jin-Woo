@@ -3,26 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>𝑩𝑶𝑻 𝑺𝒐𝒏𝒈 𝑱𝒊𝒏 𝑾𝒐𝒐 | التجربة الكاملة</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <title>الموقع الرسمي | BOT Song Jin Woo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* المتغيرات الأساسية */
         :root {
             --primary: #6366f1;
-            --primary-dark: #4f46e5;
             --secondary: #a855f7;
             --accent: #ec4899;
             --dark: #0f0f1a;
             --darker: #08080f;
-            --card: #1a1a2e;
+            --card-bg: rgba(26, 26, 46, 0.9);
             --text: #e2e8f0;
-            --text-muted: #94a3b8;
             --glow: rgba(99, 102, 241, 0.5);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Cairo', sans-serif;
             background: var(--darker);
@@ -31,71 +27,80 @@
             overflow-x: hidden;
         }
 
-        /* الخلفية المتحركة */
+        /* تأثيرات الخلفية */
         .bg-animation {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
         }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
         /* Header */
         header {
-            background: rgba(15, 15, 26, 0.95);
-            backdrop-filter: blur(20px);
+            background: rgba(15, 15, 26, 0.8);
+            backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(99, 102, 241, 0.2);
-            position: sticky; top: 0; z-index: 1000; padding: 1rem 0;
+            position: sticky; top: 0; z-index: 1000; padding: 15px 0;
         }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
         nav { display: flex; justify-content: space-between; align-items: center; }
-        .logo { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text); font-weight: 700; }
-        .logo img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--primary); }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); font-weight: 900; }
+        .logo img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--primary); box-shadow: 0 0 15px var(--glow); }
 
         /* Hero Section */
-        .hero { text-align: center; padding: 6rem 2rem 4rem; }
+        .hero { text-align: center; padding: 60px 0 40px; }
         .hero-badge {
             display: inline-block; background: linear-gradient(135deg, var(--primary), var(--secondary));
-            padding: 0.5rem 1.5rem; border-radius: 50px; font-weight: 700; margin-bottom: 2rem;
-            animation: glow 2s ease-in-out infinite alternate;
+            padding: 5px 20px; border-radius: 50px; font-size: 0.9rem; font-weight: 700; margin-bottom: 20px;
         }
-        @keyframes glow { from { box-shadow: 0 0 10px var(--glow); } to { box-shadow: 0 0 30px var(--glow); } }
-
         .hero h1 { font-size: 3.5rem; font-weight: 900; background: linear-gradient(135deg, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .shadow-text { font-size: 1.2rem; color: var(--accent); font-weight: 700; margin-top: 1rem; height: 30px; }
+        .typewriter-container { height: 40px; margin-top: 10px; }
+        .typewriter-text { color: var(--accent); font-weight: 700; font-size: 1.2rem; }
 
-        /* Stats Cards */
-        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 3rem 0; }
-        .stat-card {
-            background: var(--card); padding: 2rem; border-radius: 20px; text-align: center;
-            border: 1px solid rgba(99, 102, 241, 0.2); transition: 0.3s;
-        }
-        .stat-card:hover { transform: translateY(-10px); border-color: var(--primary); }
+        /* Stats Bar */
+        .stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 40px 0; }
+        .stat-item { background: var(--card-bg); padding: 20px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
+        .stat-item i { font-size: 1.5rem; color: var(--primary); margin-bottom: 10px; }
 
-        /* Interactive Post Section */
-        .post-input-container {
-            background: var(--card); padding: 2rem; border-radius: 24px; margin-bottom: 3rem;
-            border: 1px solid var(--primary);
+        /* Main Sections (Cards) */
+        .section-card {
+            background: var(--card-bg); border-radius: 24px; padding: 35px; margin-bottom: 30px;
+            border: 1px solid rgba(99, 102, 241, 0.1); position: relative; overflow: hidden;
+            transition: 0.4s ease;
         }
+        .section-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .section-title { font-size: 1.8rem; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 15px; }
+        
+        /* Features & Rules List */
+        .custom-list { list-style: none; }
+        .custom-list li { 
+            padding: 12px 25px; margin-bottom: 10px; background: rgba(255,255,255,0.03); 
+            border-radius: 12px; border-right: 4px solid var(--secondary);
+        }
+        .custom-list li strong { color: var(--accent); }
+
+        /* Interactive Post System (Integrated) */
+        .post-input-box { display: flex; flex-direction: column; gap: 15px; }
         textarea {
-            width: 100%; background: var(--darker); border: 1px solid var(--text-muted);
-            border-radius: 12px; color: white; padding: 1rem; font-family: 'Cairo'; resize: none;
+            width: 100%; background: #08080f; border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 15px; color: white; padding: 15px; font-family: 'Cairo'; resize: none;
         }
-        .btn-post {
-            margin-top: 1rem; background: var(--primary); color: white; border: none;
-            padding: 0.8rem 2rem; border-radius: 50px; cursor: pointer; font-weight: 700; transition: 0.3s;
+        .btn-action {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white; border: none; padding: 12px 30px; border-radius: 50px;
+            cursor: pointer; font-weight: 700; transition: 0.3s; align-self: flex-start;
         }
-        .btn-post:hover { background: var(--secondary); transform: scale(1.05); }
-
-        .post-card {
-            background: rgba(255, 255, 255, 0.03); padding: 1.5rem; border-radius: 15px;
-            margin-bottom: 1rem; border-right: 4px solid var(--accent); animation: fadeIn 0.5s ease;
+        .post-item {
+            background: rgba(255,255,255,0.05); padding: 15px; border-radius: 15px;
+            margin-top: 15px; border-right: 3px solid var(--accent); animation: slideIn 0.4s ease;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
 
-        /* Footer */
-        footer { background: var(--dark); padding: 3rem 0; text-align: center; border-top: 1px solid var(--primary); }
+        /* Footer & CTA */
+        .cta-group { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 40px; }
+        .footer-info { text-align: center; padding: 50px 0; border-top: 1px solid rgba(99, 102, 241, 0.1); color: #64748b; }
 
+        @media (max-width: 768px) { .hero h1 { font-size: 2.2rem; } }
     </style>
 </head>
 <body>
@@ -107,58 +112,80 @@
             <nav>
                 <a href="#" class="logo">
                     <img src="https://github.com/SongJinwoo1/Bot-Song-Jin-Woo/blob/main/photo_5821173209150196869_y%20(1).jpg?raw=true" alt="Logo">
-                    <span>𝑩𝑶𝑻 𝑺𝒐𝒏𝒈 𝑱𝒊𝒏 𝑾𝒐𝒐</span>
+                    <span>SONG JIN WOO</span>
                 </a>
-                <div style="color: var(--accent); font-weight: 900;">RANK: S</div>
+                <div style="font-weight: bold; color: var(--accent);">Level: <span id="userLevel">S</span></div>
             </nav>
         </div>
     </header>
 
     <main class="container">
         <section class="hero">
-            <div class="hero-badge">⚡ النظام قيد التشغيل</div>
-            <h1>استيقظ.. (Arise)</h1>
-            <div class="shadow-text" id="typewriter"></div>
+            <div class="hero-badge">الملك قد استيقظ ⚡</div>
+            <h1>نظام بوت سونغ جين وو</h1>
+            <div class="typewriter-container">
+                <span id="typewriter" class="typewriter-text"></span>
+            </div>
         </section>
 
-        <div class="stats">
-            <div class="stat-card">
-                <i class="fas fa-bolt" style="font-size: 2rem; color: var(--primary);"></i>
-                <h3>القوة</h3>
-                <p>999+ ليفل</p>
-            </div>
-            <div class="stat-card">
-                <i class="fas fa-ghost" style="font-size: 2rem; color: var(--secondary);"></i>
-                <h3>جيش الظلال</h3>
-                <p>10,000+ جندي</p>
-            </div>
-            <div class="stat-card">
-                <i class="fas fa-shield-alt" style="font-size: 2rem; color: var(--accent);"></i>
-                <h3>الحماية</h3>
-                <p>تشفير ملكي</p>
-            </div>
+        <div class="stats-bar">
+            <div class="stat-item"><i class="fas fa-users"></i><div>+10K مستخدم</div></div>
+            <div class="stat-item"><i class="fas fa-code-branch"></i><div>إصدار v2.0</div></div>
+            <div class="stat-item"><i class="fas fa-shield-virus"></i><div>حماية متطورة</div></div>
         </div>
 
-        <section class="post-input-container">
-            <h2 style="margin-bottom: 1rem;"><i class="fas fa-pen-nib"></i> انشر مهامك اليومية</h2>
-            <textarea id="postContent" rows="3" placeholder="ماذا ستصطاد اليوم يا ملك؟"></textarea>
-            <button class="btn-post" onclick="addPost()">نشر في عالم الظلال</button>
-        </section>
+        <div class="section-card">
+            <h2 class="section-title"><i class="fas fa-address-card"></i> تعريف بالبوت</h2>
+            <p>مرحباً بك في واجهة التحكم الرسمية. بوت سونغ جين وو ليس مجرد أداة عادية، بل هو نظام متكامل لإدارة مجموعات واتساب، توفير الترفيه، وتسهيل المهام اليومية للمستخدمين بلمسة مستوحاة من عالم الصيادين.</p>
+        </div>
 
-        <div id="postsList">
+        <div class="section-card" id="rules">
+            <h2 class="section-title"><i class="fas fa-gavel"></i> قوانين وشروط الاستخدام</h2>
+            <ul class="custom-list">
+                <li><strong>الاحترام:</strong> يُحظر تماماً استخدام البوت في الإساءة للأفراد أو الأديان.</li>
+                <li><strong>الاستهلاك:</strong> تكرار الأوامر بشكل مفرط (Spam) يعرض حسابك للحظر التلقائي من النظام.</li>
+                <li><strong>المحتوى:</strong> يمنع استخدام البوت لإنتاج أو طلب محتوى غير لائق أو مخالف للآداب العامة.</li>
+                <li><strong>المسؤولية:</strong> المطور غير مسؤول عن أي سوء استخدام للبوت داخل المجموعات الخاصة.</li>
+            </ul>
+        </div>
+
+        <div class="section-card">
+            <h2 class="section-title"><i class="fas fa-star"></i> المميزات الحصرية</h2>
+            <ul class="custom-list">
+                <li><strong>نظام الرتب:</strong> ميزة الـ Level Up التي تعطي المستخدمين ألقاباً بناءً على تفاعلهم.</li>
+                <li><strong>أوامر المطور:</strong> أدوات برمجية متطورة لتحويل الصور لملصقات، وتحميل الفيديوهات.</li>
+                <li><strong>جيش الظلال:</strong> نظام ذكاء اصطناعي بسيط للرد على الاستفسارات والتفاعل.</li>
+            </ul>
+        </div>
+
+        <div class="section-card">
+            <h2 class="section-title"><i class="fas fa-bullhorn"></i> سجل المهام (المنشورات)</h2>
+            <div class="post-input-box">
+                <textarea id="postContent" rows="3" placeholder="أعلن عن مهمة جديدة أو اترك تعليقاً..."></textarea>
+                <button class="btn-action" onclick="publishPost()">نشر المهمة</button>
             </div>
+            <div id="postsContainer"></div>
+        </div>
+
+        <div class="cta-group">
+            <a href="https://chat.whatsapp.com/JILd7b6sW0JFk4bYPVzRrw" class="btn-action" style="text-decoration:none" target="_blank">
+                <i class="fab fa-whatsapp"></i> جروب الدعم والتجربة
+            </a>
+            <a href="https://whatsapp.com/channel/0029VbCMlkj2ER6nzLnwpO3G" class="btn-action" style="text-decoration:none; background: transparent; border: 1px solid var(--primary);" target="_blank">
+                <i class="fas fa-broadcast-tower"></i> القناة الرسمية
+            </a>
+        </div>
     </main>
 
-    <footer>
-        <p>© 2024 جميع الحقوق محفوظة لجيش الظلال</p>
-        <div style="margin-top: 1rem;">
-            <a href="#" style="color: var(--primary); margin: 0 10px;"><i class="fab fa-whatsapp"></i></a>
-            <a href="#" style="color: var(--primary); margin: 0 10px;"><i class="fab fa-github"></i></a>
+    <footer class="footer-info">
+        <div class="container">
+            <p>© 2024 SONG JIN WOO BOT - صُنع بواسطة فريق الظلال</p>
+            <p style="font-size: 0.8rem; margin-top: 10px;">Arise... and follow the king</p>
         </div>
     </footer>
 
     <script>
-        // 1. تأثير الآلة الكاتبة (Typewriter)
+        // 1. الآلة الكاتبة (Typewriter Effect)
         const text = "أنا أرتقي... لذا عليك أن تطيع أو تموت!";
         let i = 0;
         function typeWriter() {
@@ -170,50 +197,43 @@
         }
         window.onload = typeWriter;
 
-        // 2. نظام إضافة المنشورات تفاعلياً
-        function addPost() {
+        // 2. نظام المنشورات (Interactive Posts)
+        function publishPost() {
             const content = document.getElementById('postContent').value;
-            if (content.trim() === "") {
-                alert("اكتب شيئاً أولاً!");
-                return;
-            }
+            if (!content.trim()) return alert("الرجاء كتابة محتوى!");
 
-            const postsList = document.getElementById('postsList');
-            const newPost = document.createElement('div');
-            newPost.className = 'post-card';
+            const container = document.getElementById('postsContainer');
+            const post = document.createElement('div');
+            post.className = 'post-item';
+            const time = new Date().toLocaleTimeString('ar-SA');
             
-            const date = new Date().toLocaleTimeString('ar-SA');
-            
-            newPost.innerHTML = `
-                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                    <strong style="color: var(--primary);">الملك (أنت)</strong>
-                    <small style="color: var(--text-muted);">${date}</small>
+            post.innerHTML = `
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:var(--primary); margin-bottom:5px;">
+                    <span>صياد برتبة S</span>
+                    <span>${time}</span>
                 </div>
-                <p>${content}</p>
-                <div style="margin-top: 10px; font-size: 0.8rem; color: var(--accent);">
-                    <i class="fas fa-check-circle"></i> تم التحقق من المهمة
-                </div>
+                <div style="color:var(--text);">${content}</div>
             `;
             
-            postsList.insertBefore(newPost, postsList.firstChild);
-            document.getElementById('postContent').value = "";
+            container.insertBefore(post, container.firstChild);
+            document.getElementById('postContent').value = '';
         }
 
-        // 3. تأثير الـ Parallax للبطاقات
+        // 3. تأثير الـ 3D Tilt للكروت
         document.addEventListener('mousemove', (e) => {
-            const cards = document.querySelectorAll('.stat-card');
-            const mouseX = e.clientX;
-            const mouseY = e.clientY;
-
+            const cards = document.querySelectorAll('.section-card');
             cards.forEach(card => {
                 const rect = card.getBoundingClientRect();
-                const cardX = rect.left + rect.width / 2;
-                const cardY = rect.top + rect.height / 2;
-
-                const angleX = (mouseY - cardY) / 25;
-                const angleY = (cardX - mouseX) / 25;
-
-                card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg)`;
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                if (x > 0 && x < rect.width && y > 0 && y < rect.height) {
+                    const rotateX = (y - rect.height/2) / 25;
+                    const rotateY = (rect.width/2 - x) / 25;
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                } else {
+                    card.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
+                }
             });
         });
     </script>
