@@ -21,13 +21,13 @@ canvas#bgCanvas { position: fixed; inset: 0; z-index: -1; }
 .btn-summon {
     background: var(--card); border: 1px solid var(--primary);
     padding: 18px; border-radius: 12px; color: white; font-weight: bold;
-    cursor: pointer; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer; transition: 0.4s;
 }
 
 .btn-summon:hover {
     transform: translateY(-5px);
     border-color: var(--secondary);
-    box-shadow: 0 0 30px rgba(112, 0, 255, 0.8); /* هالة بنفسجية */
+    box-shadow: 0 0 30px rgba(112, 0, 255, 0.8); /* الهالة البنفسجية */
     color: var(--primary);
 }
 
@@ -37,11 +37,11 @@ canvas#bgCanvas { position: fixed; inset: 0; z-index: -1; }
 .modal-body { 
     background: var(--card); width: 90%; max-width: 480px; padding: 25px; 
     border-radius: 20px; border: 1px solid var(--primary); 
-    max-height: 85vh; overflow-y: auto; box-shadow: 0 0 50px rgba(0, 242, 255, 0.1);
+    max-height: 85vh; overflow-y: auto;
 }
 
-.section-img { width: 100%; border-radius: 15px; margin-bottom: 20px; border: 1px solid var(--secondary); box-shadow: 0 0 15px var(--secondary); }
+.section-img { width: 100%; border-radius: 15px; margin-bottom: 20px; border: 1px solid var(--secondary); }
 
-.idea-item { text-align: right; background: rgba(255,255,255,0.04); padding: 12px; margin: 8px 0; border-radius: 10px; border-right: 4px solid var(--primary); font-size: 0.9rem; }
+.idea-item { text-align: right; background: rgba(255,255,255,0.04); padding: 12px; margin: 8px 0; border-radius: 10px; border-right: 4px solid var(--primary); }
 
-.close-btn { margin-top: 20px; width: 100%; background: var(--secondary) !important; border: none !important; }
+.close-btn { margin-top: 20px; width: 100%; background: var(--secondary); border: none; }
