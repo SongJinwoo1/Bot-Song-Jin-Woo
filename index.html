@@ -5,29 +5,187 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ARISE | SHADOW GATEWAY</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root { --monarch: #8a2be2; --mastermind: #00ffcc; --bg: #030303; --text: #e0e0e0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body, html { width: 100%; height: 100%; background-color: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, sans-serif; overflow: hidden; direction: rtl; }
+        #matrixCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.15; }
+        .wrapper { position: relative; z-index: 10; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; width: 100%; padding: 10px; }
+        #terminal { width: 100%; max-width: 800px; height: 80vh; background: rgba(5, 5, 5, 0.97); border: 1px solid #1a1a1a; box-shadow: 0 0 50px rgba(0,0,0,1), 0 0 20px rgba(138, 43, 226, 0.2); padding: 30px; overflow-y: auto; border-radius: 12px; backdrop-filter: blur(15px); position: relative; }
+        .log { margin-bottom: 18px; line-height: 1.6; font-size: 1.05rem; }
+        .system { color: var(--monarch); font-weight: bold; text-shadow: 0 0 5px rgba(138, 43, 226, 0.5); }
+        .error { color: #ff4444; font-weight: bold; background: rgba(255,0,0,0.1); padding: 5px 10px; border-right: 3px solid #ff4444; }
+        .quote { color: #999; font-style: italic; border-right: 4px solid var(--mastermind); padding-right: 15px; margin: 25px 0; font-size: 1.2rem; }
+        .input-wrap { display: flex; color: var(--mastermind); align-items: center; margin-top: 20px; }
+        input { background: transparent; border: none; color: #fff; outline: none; flex: 1; font-family: inherit; font-size: 1.1rem; padding-right: 12px; }
+        .loading-bar-container { width: 100%; height: 3px; background: #111; margin-top: 25px; display: none; border-radius: 5px; overflow: hidden; }
+        .loading-bar { width: 0%; height: 100%; background: linear-gradient(90deg, var(--monarch), var(--mastermind)); transition: 4.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .social-footer { position: fixed; bottom: 20px; display: flex; gap: 30px; z-index: 100; background: rgba(0,0,0,0.5); padding: 10px 30px; border-radius: 50px; border: 1px solid #222; }
+        .social-footer a { color: #555; font-size: 22px; transition: 0.4s; }
+        .social-footer a:hover { transform: translateY(-5px) scale(1.2); color: var(--mastermind); text-shadow: 0 0 10px var(--mastermind); }
+        .hidden { display: none; }
+        ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
+    </style>
 </head>
 <body>
-    <canvas id="matrixCanvas"></canvas>
-    <div class="wrapper">
-        <div id="terminal">
-            <div id="output"></div>
-            <div id="input-line" class="input-wrap hidden">
-                <span>❱</span>
-                <input type="text" id="userInput" autofocus autocomplete="off" placeholder="اكتب استجابتك هنا...">
-            </div>
-            <div id="progressContainer" class="loading-bar-container">
-                <div id="progress" class="loading-bar"></div>
-            </div>
+
+<canvas id="matrixCanvas"></canvas>
+
+<div class="wrapper">
+    <div id="terminal">
+        <div id="output"></div>
+        <div id="input-line" class="input-wrap hidden">
+            <span>❱</span>
+            <input type="text" id="userInput" autofocus autocomplete="off" placeholder="اكتب استجابتك هنا...">
         </div>
-        <div class="social-footer">
-            <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
-            <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
-            <a href="#" title="Telegram"><i class="fab fa-telegram"></i></a>
-            <a href="#" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-            <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+        <div id="progressContainer" class="loading-bar-container">
+            <div id="progress" class="loading-bar"></div>
         </div>
     </div>
-    <script src="script.js"></script>
+
+    <div class="social-footer">
+        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+        <a href="#" title="Telegram"><i class="fab fa-telegram"></i></a>
+        <a href="#" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+    </div>
+</div>
+
+<script>
+    // بنك البيانات الضخم
+    const quotes = [
+        "إما أن تكون السيد، أو تكون الأداة.. الخيار كان دائماً لك.",
+        "الضعف خطيئة في عالم لا يعترف إلا بالنتائج والمنطق.",
+        "الجميع مجرد أدوات، المهم هو كيف تصبح الأداة الأكثر قيمة.",
+        "المعرفة هي السلاح الوحيد الذي لا يمكن انتزاعه منك.",
+        "لتحمي شيئاً غالياً، كن مستعداً للتخلي عن إنسانيتك.",
+        "في هذه الغرفة، الظلال هي الحقيقة الوحيدة."
+    ];
+
+    const philQuestions = [
+        "هل تعتقد أن الذكاء أهم من الأخلاق في عالم البرمجة؟",
+        "هل تفضل أن تكون ملكاً في الظلال أم خادماً في الضياء؟",
+        "إذا كان الكود يحل المشكلة، هل يهم إذا كان أخلاقياً؟",
+        "هل الغاية دائماً تبرر الوسيلة في سعيك نحو القوة؟",
+        "ماذا ستفعل لو امتلكت القدرة على كسر أي نظام في العالم؟"
+    ];
+
+    const pathMap = { "1":"الويب المتكامل", "2":"الذكاء الاصطناعي", "3":"الأمن السيبراني", "4":"برمجة التطبيقات", "5":"تحليل البيانات", "6":"الأتمتة" };
+
+    // المصفوفات العشوائية للدخول الحالي
+    const currentQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    const currentQuestion = philQuestions[Math.floor(Math.random() * philQuestions.length)];
+
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    const drops = Array(Math.floor(canvas.width / 14)).fill(1);
+    function drawMatrix() {
+        ctx.fillStyle = 'rgba(3, 3, 3, 0.08)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        drops.forEach((y, i) => {
+            ctx.fillStyle = (i % 2 === 0) ? '#8a2be2' : '#00ffcc';
+            ctx.fillText("ARISE01"[Math.floor(Math.random()*7)], i * 14, y * 14);
+            if(y * 14 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            drops[i]++;
+        });
+    }
+    setInterval(drawMatrix, 50);
+
+    const output = document.getElementById('output');
+    const inputLine = document.getElementById('input-line');
+    const userInput = document.getElementById('userInput');
+    const progress = document.getElementById('progress');
+
+    let step = 0;
+    let userData = { name: "", path: "", level: "", q: currentQuestion, a: "" };
+
+    async function write(text, type = '') {
+        const div = document.createElement('div'); div.className = `log ${type}`;
+        output.appendChild(div);
+        for (let char of text) { div.innerHTML += char; output.scrollTop = output.scrollHeight; await new Promise(r => setTimeout(r, 18)); }
+    }
+
+    async function init() {
+        await write("[SYSTEM]: جاري استدعاء بروتوكول Arise Shadow Room...", "system");
+        await write(currentQuote, "quote");
+        await write("أدخل اسمك الرمزي للبدء:");
+        inputLine.classList.remove('hidden');
+        userInput.focus();
+    }
+
+    userInput.addEventListener('keypress', async (e) => {
+        if (e.key === 'Enter' && userInput.value.trim() !== '') {
+            let val = userInput.value.trim();
+            userInput.value = '';
+            inputLine.classList.add('hidden');
+            
+            if (step === 0) {
+                userData.name = val;
+                await write(`❱ ${val}`, 'system');
+                await write(`أهلاً بك يا ${val}. حدد مسار سيادتك (ادخل الرقم من 1-6):`);
+                await write("1. الويب | 2. الذكاء | 3. الأمن | 4. التطبيقات | 5. البيانات | 6. الأتمتة", "system");
+                step++;
+            } 
+            else if (step === 1) {
+                let found = pathMap[val] || Object.values(pathMap).find(p => val.includes(p));
+                if (!found) {
+                    await write(`[ERROR]: الخيار "${val}" مرفوض. التزم بالمسارات الستة المتاحة.`, "error");
+                } else {
+                    userData.path = found;
+                    await write(`❱ ${found}`, 'system');
+                    await write("حدد مستواك الحالي (مبتدئ | متوسط | محترف):");
+                    step++;
+                }
+            } 
+            else if (step === 2) {
+                if (!["مبتدئ", "متوسط", "محترف"].includes(val)) {
+                    await write("[ERROR]: مدخلات غير منطقية. اختر (مبتدئ | متوسط | محترف).", "error");
+                } else {
+                    userData.level = val;
+                    await write(`❱ ${val}`, 'system');
+                    await write(`[اختبار المنطق]: ${currentQuestion}`);
+                    step++;
+                }
+            } 
+            else if (step === 3) {
+                userData.a = val;
+                await write(`❱ ${val}`, 'system');
+                await startAnalysis();
+                return;
+            }
+
+            inputLine.classList.remove('hidden');
+            userInput.focus();
+        }
+    });
+
+    async function startAnalysis() {
+        document.getElementById('progressContainer').style.display = 'block';
+        await write(`[ANALYSIS]: جاري تحليل نمط "${userData.name}" وتشفير البيانات...`, "system");
+        setTimeout(() => progress.style.width = '100%', 100);
+        await new Promise(r => setTimeout(r, 4800));
+        await write('"الاحتمالات استقرت. القائد بانتظار تقريرك الآن."', "quote");
+        setTimeout(redirectToWhatsApp, 1200);
+    }
+
+    function redirectToWhatsApp() {
+        const leaders = [{ n: "الملك جين وو", p: "96597805334" }, { n: "المدبر أيانوكوجي", p: "201055719273" }];
+        const lead = leaders[Math.floor(Math.random() * leaders.length)];
+        const msg = encodeURIComponent(
+            `*--- تقرير Arise Shadow Room ---*\n` +
+            `👤 العضو: ${userData.name}\n` +
+            `🛤️ المسار: ${userData.path}\n` +
+            `📊 المستوى: ${userData.level}\n` +
+            `❓ السؤال: ${userData.q}\n` +
+            `💡 الإجابة: ${userData.a}\n` +
+            `--------------------------\n` +
+            `*تم التوجيه آلياً إلى: ${lead.n}*`
+        );
+        window.location.href = `https://wa.me/${lead.p}?text=${msg}`;
+    }
+
+    init();
+</script>
 </body>
 </html>
