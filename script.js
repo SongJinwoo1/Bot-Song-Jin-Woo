@@ -49,7 +49,7 @@ let step = 0;
 let userData = { name: "", path: "", level: "", q: currentQuestion, a: "" };
 
 async function write(text, type = '') {
-    const div = document.createElement('div'); div.className = log ${type};
+    const div = document.createElement('div'); div.className = `log ${type}`;
     output.appendChild(div);
     for (let char of text) { div.innerHTML += char; output.scrollTop = output.scrollHeight; await new Promise(r => setTimeout(r, 18)); }
 }
@@ -70,18 +70,18 @@ userInput.addEventListener('keypress', async (e) => {
         
         if (step === 0) {
             userData.name = val;
-            await write(❱ ${val}, 'system');
-            await write(أهلاً بك يا ${val}. حدد مسار سيادتك (ادخل الرقم من 1-8):);
+            await write(`❱ ${val}`, 'system');
+            await write(`أهلاً بك يا ${val}. حدد مسار سيادتك (ادخل الرقم من 1-8):`);
             await write("1. الويب | 2. الذكاء | 3. الأمن | 4. التطبيقات | 5. البيانات | 6. الأتمتة | 7. C++ | 8. Java", "system");
             step++;
         } 
         else if (step === 1) {
             let found = pathMap[val] || Object.values(pathMap).find(p => val.includes(p));
             if (!found) {
-                await write([ERROR]: المسار غير موجود. التزم بالخيارات (1-8)., "error");
+                await write(`[ERROR]: المسار غير موجود. التزم بالخيارات (1-8).`, "error");
             } else {
                 userData.path = found;
-                await write(❱ ${found}, 'system');
+                await write(`❱ ${found}`, 'system');
                 await write("حدد مستواك الحالي (مبتدئ | متوسط | محترف):");
                 step++;
             }
@@ -89,16 +89,16 @@ userInput.addEventListener('keypress', async (e) => {
         else if (step === 2) {
             if (!["مبتدئ", "متوسط", "محترف"].includes(val)) {
                 await write("[ERROR]: مدخلات غير منطقية. اختر (مبتدئ | متوسط | محترف).", "error");
-              } else {
+            } else {
                 userData.level = val;
-                await write(❱ ${val}, 'system');
-                await write([اختبار المنطق]: ${currentQuestion});
+                await write(`❱ ${val}`, 'system');
+                await write(`[اختبار المنطق]: ${currentQuestion}`);
                 step++;
             }
         } 
         else if (step === 3) {
             userData.a = val;
-            await write(❱ ${val}, 'system');
+            await write(`❱ ${val}`, 'system');
             await startAnalysis();
             return;
         }
@@ -109,17 +109,16 @@ userInput.addEventListener('keypress', async (e) => {
 
 async function startAnalysis() {
     document.getElementById('progressContainer').style.display = 'block';
-    await write([ANALYSIS]: جاري تحليل نمط "${userData.name}" وتشفير البيانات..., "system");
+    await write(`[ANALYSIS]: جاري تحليل نمط "${userData.name}" وتشفير البيانات...`, "system");
     setTimeout(() => progress.style.width = '100%', 100);
     await new Promise(r => setTimeout(r, 4800));
     await write('"الاحتمالات استقرت. القائد بانتظار تقريرك الآن."', "quote");
     setTimeout(() => {
         const leaders = [{ n: "الملك جين وو", p: "96597805334" }, { n: "المدبر أيانوكوجي", p: "201055719273" }];
         const lead = leaders[Math.floor(Math.random() * leaders.length)];
-        const msg = encodeURIComponent(*--- تقرير Arise Shadow Room ---*\n👤 العضو: ${userData.name}\n🛤️ المسار: ${userData.path}\n📊 المستوى: ${userData.level}\n❓ السؤال: ${userData.q}\n💡 الإجابة: ${userData.a}\n--------------------------\n*تم التوجيه آلياً إلى: ${lead.n}*);
-        window.location.href = https://wa.me/${lead.p}?text=${msg};
+        const msg = encodeURIComponent(`*--- تقرير Arise Shadow Room ---*\n👤 العضو: ${userData.name}\n🛤️ المسار: ${userData.path}\n📊 المستوى: ${userData.level}\n❓ السؤال: ${userData.q}\n💡 الإجابة: ${userData.a}\n--------------------------\n*تم التوجيه آلياً إلى: ${lead.n}*`);
+        window.location.href = `https://wa.me/${lead.p}?text=${msg}`;
     }, 1200);
 }
 
 init();
-              
